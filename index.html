@@ -19,7 +19,7 @@
 
     <script>
       //var host = window.location.origin.replace(/^http/, 'ws')
-      var host = "ws://" + window.location.hostname + ":5000"; 
+      var host = "ws://" + window.location.hostname + ":" + window.location.port; 
       var ws = new WebSocket(host);
       ws.onmessage = function (event) {
         var li = document.createElement('li');
