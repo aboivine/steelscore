@@ -18,12 +18,14 @@
     </style>
 
     <script>
-      var host = location.origin.replace(/^http/, 'ws')
+      //var host = window.location.origin.replace(/^http/, 'ws')
+      var host = "ws://" + window.location.hostname + ":5000"; 
       var ws = new WebSocket(host);
       ws.onmessage = function (event) {
         var li = document.createElement('li');
         li.innerHTML = JSON.parse(event.data);
-        document.querySelector('#pings').innerHTML = JSON.parse(event.data);
+        //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
+        document.getElementById("pings").innerHTML = JSON.parse(event.data);
       };
       function sendPoint() {
         ws.send("Point");

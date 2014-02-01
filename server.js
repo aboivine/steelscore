@@ -22,9 +22,9 @@ wss.broadcast = function(data) {
 };
 
 wss.on('connection', function(ws) {
-    //var id = setInterval(function() {
-        //ws.send(JSON.stringify(new Date()), function() {  });
-    //}, 1000);
+    var id = setInterval(function() {
+        wss.broadcast(score.toString());
+    }, 300);
 
     console.log('websocket connection open');
 
@@ -35,7 +35,7 @@ wss.on('connection', function(ws) {
         } else {
           score++;
         }
-        wss.broadcast(score.toString());
+        //wss.broadcast(score.toString());
     };
 
     ws.on('close', function() {
