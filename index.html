@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Helvetica Neue", helvetica, arial;
+        padding: 15px;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      ul li {
+        line-height: 1.4;
+      }
+    </style>
+
+    <script>
+      var host = location.origin.replace(/^http/, 'ws')
+      var ws = new WebSocket(host);
+      ws.onmessage = function (event) {
+        var li = document.createElement('li');
+        li.innerHTML = JSON.parse(event.data);
+        document.querySelector('#pings').innerHTML = JSON.parse(event.data);
+      };
+      function sendPoint() {
+        ws.send("Point");
+      }
+      function sendReset() {
+        ws.send("Reset");
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="sendPoint()">POINT!</button>
+    <button onclick="sendReset()">RESET</button>
+    <h1>Score:</h1>
+    <h2><div id='pings'></div></h2>
+  </body>
+</html>
