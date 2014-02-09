@@ -1,4 +1,6 @@
-var score = 0;
+var scores = new Array();
+scores[0] = 0;
+scores[1] = 0;
 
 var WebSocketServer = require('ws').Server
   , http = require('http')
@@ -7,6 +9,33 @@ var WebSocketServer = require('ws').Server
   , port = process.env.PORT || 5000;
 
 app.use(express.static(__dirname + '/'));
+
+//app.all("*", function(request, response, next) {
+//  response.writeHead(200, { "Content-Type": "html" });
+//  next();
+//});
+
+app.get("/counter?:who", function(request, response) {
+  response.sendfile('counter.html');
+});
+
+app.get("/viewer", function(request, response) {
+  response.sendfile('viewer.html');
+});
+
+app.get("/table", function(request, response) {
+  response.sendfile('table.html');
+});
+
+app.get("/master", function(request, response) {
+  response.sendfile('master.html');
+});
+
+
+app.get("*", function(request, response) {
+  response.writeHead(200, { "Content-Type": "text/plain" });
+  response.end("This page doesn't exist.");
+});
 
 var server = http.createServer(app);
 server.listen(port);
@@ -23,7 +52,7 @@ wss.broadcast = function(data) {
 
 wss.on('connection', function(ws) {
     var id = setInterval(function() {
-        wss.broadcast(score.toString());
+        wss.broadcast(JSON.stringify(scores));
     }, 300);
 
     console.log('websocket connection open');
@@ -31,10 +60,18 @@ wss.on('connection', function(ws) {
     ws.onmessage = function (event) {
         //ws.send(JSON.stringify(new Date()), function() {  });
         if (event.data == "Reset") {
-          score = 0;
-        } else {
-          score++;
+          scores[0] = 0;
+          scores[1] = 0;
+        } else if (event.data == "0") { 
+          scores[0]++;
+        } else if (event.data == "1") {
+          scores[1]++;
+        } else if (event.data == "TABLE") {
+          wss.broadcast(JSON.stringify(["TABLE"]));
+        } else if (event.data == "VIEW") {
+          wss.broadcast(JSON.stringify(["VIEW"]));
         }
+
         //wss.broadcast(score.toString());
     };
 
@@ -43,5 +80,5 @@ wss.on('connection', function(ws) {
         //clearInterval(id);
     });
 
-    ws.send(score.toString());
+    ws.send(JSON.stringify(scores));
 });

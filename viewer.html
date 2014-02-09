@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Helvetica Neue", helvetica, arial;
+        color:red;
+        padding: 15px;
+        background-color:black;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      ul li {
+        line-height: 1.4;
+      }
+
+      .left-data {
+        color:red;
+      }
+
+      .todo {
+        height: 600px;
+        width: 400px;
+        background-color:white; 
+        -webkit-border-radius: 300px 0 0 0;
+        border-radius: 300px 0 0 0;
+        -webkit-box-shadow: -10px 0 5px 10px #AC2832;
+        box-shadow: -10px 0 5px 10px #AC2832;
+      }
+      .right-data {
+        color:red;
+      }
+    </style>
+
+    <script>
+      //var host = window.location.origin.replace(/^http/, 'ws')
+      var host = "ws://" + window.location.hostname + ":" + window.location.port; 
+      var ws = new WebSocket(host);
+      ws.onmessage = function (event) {
+        //var li = document.createElement('li');
+        //li.innerHTML = JSON.parse(event.data);
+        //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
+        var scores = JSON.parse(event.data);
+
+        if (scores[0] == "TABLE") {
+          window.location.replace('/table.html');
+        } else if (scores[0] == "VIEW") {
+          window.location.replace('/viewer.html');
+        } else { 
+          document.getElementById("score-a").innerHTML = scores[0].toString(); 
+          document.getElementById("score-b").innerHTML = scores[1].toString(); 
+        }
+      };
+      function sendPoint() {
+        ws.send("Point");
+      }
+      function sendReset() {
+        ws.send("Reset");
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Score:</h1>
+    <div class="left-data">
+      <div id='team-a'>N/A</div>
+      <div id='name-a'>N/A</div>
+      <div id='info-a'>N/A</div>
+      <div id='score-a'></div>
+    </div>
+    <div class="right-data">
+      <div id='team-b'>N/A</div>
+      <div id='name-b'>N/A</div>
+      <div id='info-b'>N/A</div>
+      <div id='score-b'></div>
+    </div>
+  </body>
+</html>
