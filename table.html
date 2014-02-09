@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Helvetica Neue", helvetica, arial;
+        color:red;
+        padding: 15px;
+        background-color:black;
+      }
+
+      .tftable {font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #ebab3a;border-collapse: collapse;}
+      .tftable th {font-size:12px;background-color:#e6983b;border-width: 1px;padding: 8px;border-style: solid;border-color: #ebab3a;text-align:left;}
+      .tftable tr {background-color:#f0c169;}
+      .tftable td {font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color: #ebab3a;}
+
+
+    </style>
+
+    <script>
+      //var host = window.location.origin.replace(/^http/, 'ws')
+      var host = "ws://" + window.location.hostname + ":" + window.location.port; 
+      var ws = new WebSocket(host);
+      ws.onmessage = function (event) {
+        //var li = document.createElement('li');
+        //li.innerHTML = JSON.parse(event.data);
+        //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
+        var scores = JSON.parse(event.data);
+
+        if (scores[0] == "TABLE") {
+          window.location.replace('/table.html');
+        } else if (scores[0] == "VIEW") {
+          window.location.replace('/viewer.html');
+        }
+
+      };
+    </script>
+  </head>
+  <body>
+    <table class="tftable" border="1">
+      <tr><th>Header 1</th><th>Header 2</th><th>Header 3</th><th>Header 4</th><th>Header 5</th><th>Header 6</th></tr>
+      <tr><td>Row:1 Cell:1</td><td>Row:1 Cell:2</td><td>Row:1 Cell:3</td><td>Row:1 Cell:4</td><td>Row:1 Cell:5</td><td>Row:1 Cell:6</td></tr>
+      <tr><td>Row:2 Cell:1</td><td>Row:2 Cell:2</td><td>Row:2 Cell:3</td><td>Row:2 Cell:4</td><td>Row:2 Cell:5</td><td>Row:2 Cell:6</td></tr>
+      <tr><td>Row:3 Cell:1</td><td>Row:3 Cell:2</td><td>Row:3 Cell:3</td><td>Row:3 Cell:4</td><td>Row:3 Cell:5</td><td>Row:3 Cell:6</td></tr>
+      <tr><td>Row:4 Cell:1</td><td>Row:4 Cell:2</td><td>Row:4 Cell:3</td><td>Row:4 Cell:4</td><td>Row:4 Cell:5</td><td>Row:4 Cell:6</td></tr>
+      <tr><td>Row:5 Cell:1</td><td>Row:5 Cell:2</td><td>Row:5 Cell:3</td><td>Row:5 Cell:4</td><td>Row:5 Cell:5</td><td>Row:5 Cell:6</td></tr>
+      <tr><td>Row:6 Cell:1</td><td>Row:6 Cell:2</td><td>Row:6 Cell:3</td><td>Row:6 Cell:4</td><td>Row:6 Cell:5</td><td>Row:6 Cell:6</td></tr>
+      <tr><td>Row:7 Cell:1</td><td>Row:7 Cell:2</td><td>Row:7 Cell:3</td><td>Row:7 Cell:4</td><td>Row:7 Cell:5</td><td>Row:7 Cell:6</td></tr>
+      <tr><td>Row:8 Cell:1</td><td>Row:8 Cell:2</td><td>Row:8 Cell:3</td><td>Row:8 Cell:4</td><td>Row:8 Cell:5</td><td>Row:8 Cell:6</td></tr>
+      <tr><td>Row:9 Cell:1</td><td>Row:9 Cell:2</td><td>Row:9 Cell:3</td><td>Row:9 Cell:4</td><td>Row:9 Cell:5</td><td>Row:9 Cell:6</td></tr>
+      <tr><td>Row:10 Cell:1</td><td>Row:10 Cell:2</td><td>Row:10 Cell:3</td><td>Row:10 Cell:4</td><td>Row:10 Cell:5</td><td>Row:10 Cell:6</td></tr>
+      <tr><td>Row:11 Cell:1</td><td>Row:11 Cell:2</td><td>Row:11 Cell:3</td><td>Row:11 Cell:4</td><td>Row:11 Cell:5</td><td>Row:11 Cell:6</td></tr>
+</table>
+
+  </body>
+</html>
