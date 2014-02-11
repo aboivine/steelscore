@@ -103,7 +103,7 @@ wss.on('connection', function(ws) {
 var redis = require("redis");
 var url = require("url");
 
-if (process.env.REDISTOGO_URL) {
+if (process.env.REDISCLOUD_URL) {
 //REDISCLOUD_URL: redis://rediscloud:vX7OPQEOXIKi7zgm@pub-redis-14432.us-east-1-3.1.ec2.garantiadata.com:14432
 
   console.log('connecting to Redis');
