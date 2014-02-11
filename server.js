@@ -1,3 +1,4 @@
+var dbclient=null;
 var scores = new Array();
 scores[0] = 0;
 scores[1] = 0;
@@ -70,6 +71,21 @@ wss.on('connection', function(ws) {
           wss.broadcast(JSON.stringify(["TABLE"]));
         } else if (event.data == "VIEW") {
           wss.broadcast(JSON.stringify(["VIEW"]));
+        } else {
+          var query = event.data.split(':');
+          if (query.length > 1)
+          {
+            var key = query[0];
+            var value = query[1];
+            dbclient.set(key,value);
+            wss.broadcast(JSON.stringify(query));
+
+          dbclient.get(key, function(err, reply) {
+             // reply is null when the key is missing
+             console.log(reply);
+          });
+
+          }
         }
 
         //wss.broadcast(score.toString());
@@ -82,3 +98,26 @@ wss.on('connection', function(ws) {
 
     ws.send(JSON.stringify(scores));
 });
+
+//REDIS
+var redis = require("redis");
+var url = require("url");
+
+if (process.env.REDISTOGO_URL) {
+//REDISCLOUD_URL: redis://rediscloud:vX7OPQEOXIKi7zgm@pub-redis-14432.us-east-1-3.1.ec2.garantiadata.com:14432
+
+  console.log('connecting to Redis');
+  var rtg   = url.parse(process.env.REDISCLOUD_URL);
+  dbclient = redis.createClient(rtg.port, rtg.hostname);
+
+  dbclient.on("error", function (err) {
+        console.log("Redis Error " + err);
+    });
+  dbclient.auth(rtg.auth.split(":")[1]);
+} else {
+  console.log('local redis');
+  dbclient = redis.createClient();
+  dbclient.on("error", function (err) {
+        console.log("Redis Error " + err);
+    });
+}
