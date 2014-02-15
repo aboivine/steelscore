@@ -36,11 +36,6 @@
       function displayTable() {
         ws.send("TABLE");
       }
-      function sendAll() {
-        for(var els = document.getElementsByTagName ('input'), i = els.length; i--;){
-          sendResult(els[i].id);
-        }
-      }
       function displayView() {
         ws.send("VIEW");
       }

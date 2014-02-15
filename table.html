@@ -154,11 +154,8 @@ div{
 
     <script>
       window.onload = function () {
-        alert("onload");
         for(var els = document.getElementsByTagName ('div'), i = els.length; i--;){
-          alert("div");
           if(els[i].id != null){
-          //alert(els[i].id);
           ws.send(els[i].id + ":?" );}
         }
       };
