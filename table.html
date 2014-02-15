@@ -1,22 +1,168 @@
 <html>
   <head>
     <style>
-      body {
-        font-family: "Helvetica Neue", helvetica, arial;
-        color:red;
-        padding: 15px;
-        background-color:black;
-      }
+.view {
+    margin:0px;padding:0px;
+    width:100%;
+}
+.view table{
+    border-collapse: collapse;
+        border-spacing: 0;
+    width:100%;
+    height:100%;
+    margin:0px;padding:0px;
+}
+.tftable {
+    background:url("jabl.png") no-repeat;
+    margin:0px;padding:0px;
+    width:100%;
+    box-shadow: 10px 10px 5px #888888;
+    border:1px solid #7f0000;
+    
+    -moz-border-radius-bottomleft:6px;
+    -webkit-border-bottom-left-radius:6px;
+    border-bottom-left-radius:6px;
+    
+    -moz-border-radius-bottomright:6px;
+    -webkit-border-bottom-right-radius:6px;
+    border-bottom-right-radius:6px;
+    
+    -moz-border-radius-topright:6px;
+    -webkit-border-top-right-radius:6px;
+    border-top-right-radius:6px;
+    
+    -moz-border-radius-topleft:6px;
+    -webkit-border-top-left-radius:6px;
+    border-top-left-radius:6px;
+}.tftable table{
+    border-collapse: collapse;
+        border-spacing: 0;
+    width:100%;
+    height:100%;
+    margin:0px;padding:0px;
+}.tftable tr:last-child td:last-child {
+    -moz-border-radius-bottomright:6px;
+    -webkit-border-bottom-right-radius:6px;
+    border-bottom-right-radius:6px;
+}
+.tftable table tr:first-child td:first-child {
+    -moz-border-radius-topleft:6px;
+    -webkit-border-top-left-radius:6px;
+    border-top-left-radius:6px;
+}
+.tftable table tr:first-child td:last-child {
+    -moz-border-radius-topright:6px;
+    -webkit-border-top-right-radius:6px;
+    border-top-right-radius:6px;
+}.tftable tr:last-child td:first-child{
+    -moz-border-radius-bottomleft:6px;
+    -webkit-border-bottom-left-radius:6px;
+    border-bottom-left-radius:6px;
+}.tftable tr:hover td{
+    background-color:#ffffff;
+}
+.tftable td{
+    vertical-align:middle;
+    background-color:#e5e5e5;
+    border:1px solid #7f0000;
+    border-width:0px 1px 1px 0px;
+    text-align:center;
+    padding:4px;
+    font-size:16px;
+    font-family:Arial;
+    font-weight:normal;
+    color:#000000;
+}.tftable tr:last-child td{
+    border-width:0px 1px 0px 0px;
+}.tftable tr th:first-child{
+    background: #8f0222;
+    font-size:22px;
+    font-family:Arial;
+    font-weight:normal;
+    max-width:80px;
+    color:#ffffff;
+}.tftable tr td:last-child{
+    border-width:0px 0px 1px 0px;
+}.tftable tr:last-child td:last-child{
+    border-width:0px 0px 0px 0px;
+}
+.tftable tr:first-child {
+    background: #a90329; /* Old browsers */
+    background: -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+    border:0px solid #7f0000;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    font-size:32px;
+    font-family:Arial;
+    font-weight:bold;
+    color:#ffffff;
+    border-width:0px 0px 1px 0px;
+}
+.tftable tr:first-child th:first-child{
+    background: #a90329; /* Old browsers */
+    background: -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+    border:0px solid #7f0000;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    font-size:32px;
+    font-family:Arial;
+    font-weight:bold;
+    color:#ffffff;
+    border-width:0px 0px 1px 0px;
 
-      .tftable {font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #ebab3a;border-collapse: collapse;}
-      .tftable th {font-size:12px;background-color:#e6983b;border-width: 1px;padding: 8px;border-style: solid;border-color: #ebab3a;text-align:left;}
-      .tftable tr {background-color:#f0c169;}
-      .tftable td {font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color: #ebab3a;}
+}
+.tftable tr:first-child td:last-child{
+    border-width:0px 0px 1px 1px;
+}
 
+.vertab tr {
+    background: #a90329; /* Old browsers */
+    background: -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+    border:0px solid #7f0000;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    font-size:24px;
+    font-family:Arial;
+    font-weight:bold;
+    color:#ffffff;
+    border-width:0px 0px 1px 0px;
+}
+div{
+  float:left;
+  padding:6px;
+}
 
     </style>
 
     <script>
+      window.onload = function () {
+        alert("onload");
+        for(var els = document.getElementsByTagName ('div'), i = els.length; i--;){
+          alert("div");
+          if(els[i].id != null){
+          //alert(els[i].id);
+          ws.send(els[i].id + ":?" );}
+        }
+      };
+
       //var host = window.location.origin.replace(/^http/, 'ws')
       var host = "ws://" + window.location.hostname + ":" + window.location.port; 
       var ws = new WebSocket(host);
@@ -28,6 +174,7 @@
 
         if (scores[0] == "TABLE") {
           window.location.replace('/table.html');
+          //getAll();
         } else if (scores[0] == "VIEW") {
           window.location.replace('/viewer.html');
         } else {
@@ -41,31 +188,54 @@
     </script>
   </head>
   <body>
-    <table class="tftable" border="1">
-      <tr><th>Header 1</th><th>Header 2</th><th>Header 3</th><th>Header 4</th><th>Header 5</th><th>Header 6</th></tr>
-      <tr><td><div id="1-1"></div>-<div id="1-2"></div></td>
-          <td><div id="1-3"></div>-<div id="1-4"></div></td>
-          <td><div id="1-5"></div>-<div id="1-6"></div></td>
-          <td><div id="1-7"></div>-<div id="1-8"></div></td>
-          <td><div id="1-9"></div>-<div id="1-10"></div></td>
-          <td><div id="1-11"></div>-<div id="1-12"></div></td>
+    <div class="view">
+    <div class = "tftable">
+    <table>
+      <tr><th></th><th>Round 1</th><th>Round 2</th><th>Round 3</th></tr>
+      <tr><th rowspan="3">Longsword</th>
+          <td><div id="1-1-1-n"></div><div id="1-1-1"></div><div>-</div><div id="1-1-2"></div><div id="1-1-2-n"></div></td>
+          <td><div id="1-1-3-n"></div><div id="1-1-3"></div><div>-</div><div id="1-1-4"></div><div id="1-1-4-n"></div></td>
+          <td><div id="1-1-5-n"></div><div id="1-1-5"></div><div>-</div><div id="1-1-6"></div><div id="1-1-6-n"></div></td>
       </tr>
-      <tr><td><div id="2-1"></div>-<div id="2-2"></div></td>
-          <td><div id="2-3"></div>-<div id="2-4"></div></td>
-          <td><div id="2-5"></div>-<div id="2-6"></div></td>
-          <td><div id="2-7"></div>-<div id="2-8"></div></td>
-          <td><div id="2-9"></div>-<div id="2-10"></div></td>
-          <td><div id="2-11"></div>-<div id="2-12"></div></td>
+      <tr><td><div id="1-2-1-n"></div><div id="1-2-1"></div><div>-</div><div id="1-2-2"></div><div id="1-2-2-n"></div></td>
+          <td><div id="1-2-3-n"></div><div id="1-2-3"></div><div>-</div><div id="1-2-4"></div><div id="1-2-4-n"></div></td>
+          <td><div id="1-2-5-n"></div><div id="1-2-5"></div><div>-</div><div id="1-2-6"></div><div id="1-2-6-n"></div></td>
       </tr>
-      <tr><td><div id="3-1"></div>-<div id="3-2"></div></td>
-          <td><div id="3-3"></div>-<div id="3-4"></div></td>
-          <td><div id="3-5"></div>-<div id="3-6"></div></td>
-          <td><div id="3-7"></div>-<div id="3-8"></div></td>
-          <td><div id="3-9"></div>-<div id="3-10"></div></td>
-          <td><div id="3-11"></div>-<div id="3-12"></div></td>
+      <tr><td><div id="1-3-1-n"></div><div id="1-3-1"></div><div>-</div><div id="1-3-2"></div><div id="1-3-2-n"></div></td>
+          <td><div id="1-3-3-n"></div><div id="1-3-3"></div><div>-</div><div id="1-3-4"></div><div id="1-3-4-n"></div></td>
+          <td><div id="1-3-5-n"></div><div id="1-3-5"></div><div>-</div><div id="1-3-6"></div><div id="1-3-6-n"></div></td>
+      </tr>
+      <tr style="height:5"></tr>
+      <tr><th rowspan="3">Sword &amp; Shield</th>
+          <td><div id="2-1-1-n"></div><div id="2-1-1"></div><div>-</div><div id="2-1-2"></div><div id="2-1-2-n"></div></td>
+          <td><div id="2-1-3-n"></div><div id="2-1-3"></div><div>-</div><div id="2-1-4"></div><div id="2-1-4-n"></div></td>
+          <td><div id="2-1-5-n"></div><div id="2-1-5"></div><div>-</div><div id="2-1-6"></div><div id="2-1-6-n"></div></td>
+      </tr>
+      <tr><td><div id="2-2-1-n"></div><div id="2-2-1"></div><div>-</div><div id="2-2-2"></div><div id="2-2-2-n"></div></td>
+          <td><div id="2-2-3-n"></div><div id="2-2-3"></div><div>-</div><div id="2-2-4"></div><div id="2-2-4-n"></div></td>
+          <td><div id="2-2-5-n"></div><div id="2-2-5"></div><div>-</div><div id="2-2-6"></div><div id="2-2-6-n"></div></td>
+      </tr>
+      <tr><td><div id="2-3-1-n"></div><div id="2-3-1"></div><div>-</div><div id="2-3-2"></div><div id="2-3-2-n"></div></td>
+          <td><div id="2-3-3-n"></div><div id="2-3-3"></div><div>-</div><div id="2-3-4"></div><div id="2-3-4-n"></div></td>
+          <td><div id="2-3-5-n"></div><div id="2-3-5"></div><div>-</div><div id="2-3-6"></div><div id="2-3-6-n"></div></td>
+      </tr>
+      <tr style="height:5"></tr>
+      <tr><th rowspan="3">Polearm</th>
+          <td><div id="3-1-1-n"></div><div id="3-1-1"></div><div>-</div><div id="3-1-2"></div><div id="3-1-2-n"></div></td>
+          <td><div id="3-1-3-n"></div><div id="3-1-3"></div><div>-</div><div id="3-1-4"></div><div id="3-1-4-n"></div></td>
+          <td><div id="3-1-5-n"></div><div id="3-1-5"></div><div>-</div><div id="3-1-6"></div><div id="3-1-6-n"></div></td>
+      </tr>
+      <tr><td><div id="3-2-1-n"></div><div id="3-2-1"></div><div>-</div><div id="3-2-2"></div><div id="3-2-2-n"></div></td>
+          <td><div id="3-2-3-n"></div><div id="3-2-3"></div><div>-</div><div id="3-2-4"></div><div id="3-2-4-n"></div></td>
+          <td><div id="3-2-5-n"></div><div id="3-2-5"></div><div>-</div><div id="3-2-6"></div><div id="3-2-6-n"></div></td>
+      </tr>
+      <tr><td><div id="3-3-1-n"></div><div id="3-3-1"></div><div>-</div><div id="3-3-2"></div><div id="3-3-2-n"></div></td>
+          <td><div id="3-3-3-n"></div><div id="3-3-3"></div><div>-</div><div id="3-3-4"></div><div id="3-3-4-n"></div></td>
+          <td><div id="3-3-5-n"></div><div id="3-3-5"></div><div>-</div><div id="3-3-6"></div><div id="3-3-6-n"></div></td>
       </tr>
 </table>
-
+</div>
+</div>
 
   </body>
 </html>

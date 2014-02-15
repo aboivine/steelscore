@@ -77,14 +77,20 @@ wss.on('connection', function(ws) {
           {
             var key = query[0];
             var value = query[1];
+            if(value == "?")
+            {
+            dbclient.get(key, function(err, reply) {
+               var snd = new Array();
+               snd[0] = key;
+               snd[1] =reply ;
+            console.log("New request");
+            console.log(JSON.stringify(snd));
+               wss.broadcast(JSON.stringify(snd));
+            });
+            }else{
             dbclient.set(key,value);
             wss.broadcast(JSON.stringify(query));
-
-          dbclient.get(key, function(err, reply) {
-             // reply is null when the key is missing
-             console.log(reply);
-          });
-
+           }
           }
         }
 
