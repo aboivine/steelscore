@@ -3,6 +3,28 @@ var scores = new Array();
 scores[0] = 0;
 scores[1] = 0;
 
+function sendAll() {
+   for (var i = 1; i <=3; i++) {
+   for (var j = 1; j <=3; j++) {
+   for (var k = 1; k <=3; k++) {
+   for (var l = 1; l <=2; l++) {
+
+     var key = "";
+     if (l == 1) {
+       key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
+     } else {
+       key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";
+     }
+      dbclient.get(key, function(err, reply) {
+         var snd = reply.split(":");
+         console.log("New req");
+         console.log(JSON.stringify(snd));
+         wss.broadcast(JSON.stringify(snd));
+      });
+   
+   }}}}
+}
+
 var WebSocketServer = require('ws').Server
   , http = require('http')
   , express = require('express')
@@ -69,6 +91,8 @@ wss.on('connection', function(ws) {
           scores[1]++;
         } else if (event.data == "TABLE") {
           wss.broadcast(JSON.stringify(["TABLE"]));
+        } else if (event.data == "GET") {
+          sendAll();
         } else if (event.data == "VIEW") {
           wss.broadcast(JSON.stringify(["VIEW"]));
         } else {
@@ -88,7 +112,8 @@ wss.on('connection', function(ws) {
                wss.broadcast(JSON.stringify(snd));
             });
             }else{
-            dbclient.set(key,value);
+            dbclient.set(key,key+":"+value);
+            console.log("set "+key+"="+key+":"+value);
             wss.broadcast(JSON.stringify(query));
            }
           }
