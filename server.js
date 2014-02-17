@@ -240,7 +240,7 @@ if (process.env.REDISCLOUD_URL) {
   console.log('connecting to Redis');
   var rtg   = url.parse(process.env.REDISCLOUD_URL);
   dbclient = redis.createClient(rtg.port, rtg.hostname);
-
+  dbclient.debug_mode = true;
   dbclient.on("error", function (err) {
         console.log("Redis Error " + err);
     });
