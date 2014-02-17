@@ -4,6 +4,87 @@ var scores = new Array();
 scores[0] = 0;
 scores[1] = 0;
 
+function sendAllI()
+{
+   for (var i = 1; i <=3; i++) {
+   for (var j = 1; j <=3; j++) {
+   for (var k = 1; k <=3; k++) {
+   for (var l = 1; l <=2; l++) {
+
+     var key = "";
+     if (l == 1) {
+       key = "1-" + i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
+     } else {
+       key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";
+     }
+      dbclient.get(key, function(err, reply) {
+       if (reply!=null){
+         var snd = reply.split(":");
+         if (snd[0].slice(-1) == "n"){
+            snd[0] = "1-" + snd[0];
+         }
+         console.log("New req");
+         console.log(JSON.stringify(snd));
+         wss.broadcast(JSON.stringify(snd));
+      }});
+
+   }}}}
+}
+
+function sendAllII()
+{
+   for (var i = 1; i <=3; i++) {
+   for (var j = 1; j <=3; j++) {
+   for (var k = 1; k <=3; k++) {
+   for (var l = 1; l <=2; l++) {
+
+     var key = "";
+     if (l == 1) {
+       key = "2-" + i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
+     } else {
+       key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";
+     }
+      dbclient.get(key, function(err, reply) {
+       if (reply!=null){
+         var snd = reply.split(":");
+         if (snd[0].slice(-1) == "n"){
+            snd[0] = "2-" + snd[0];
+         }
+         console.log("New req");
+         console.log(JSON.stringify(snd));
+         wss.broadcast(JSON.stringify(snd));
+      }});
+
+   }}}}
+}
+
+function sendAllIII()
+{
+   for (var i = 1; i <=3; i++) {
+   for (var j = 1; j <=3; j++) {
+   for (var k = 1; k <=3; k++) {
+   for (var l = 1; l <=2; l++) {
+
+     var key = "";
+     if (l == 1) {
+       key = "3-" + i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
+     } else {
+       key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";
+     }
+      dbclient.get(key, function(err, reply) {
+       if (reply!=null){
+         var snd = reply.split(":");
+         if (snd[0].slice(-1) == "n"){
+            snd[0] = "3-" + snd[0];
+         }
+         console.log("New req");
+         console.log(JSON.stringify(snd));
+         wss.broadcast(JSON.stringify(snd));
+      }});
+
+   }}}}
+}
+
 function sendAll() {
    for (var i = 1; i <=3; i++) {
    for (var j = 1; j <=3; j++) {
@@ -17,11 +98,12 @@ function sendAll() {
        key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";
      }
       dbclient.get(key, function(err, reply) {
+       if (reply!=null){
          var snd = reply.split(":");
          console.log("New req");
          console.log(JSON.stringify(snd));
          wss.broadcast(JSON.stringify(snd));
-      });
+      }});
    
    }}}}
 }
@@ -101,6 +183,10 @@ wss.on('connection', function(ws) {
           round = 3;
         } else if (event.data == "GET") {
           sendAll();
+        } else if (event.data == "GETI") {
+          sendAllI();
+          sendAllII();
+          sendAllIII();
         } else if (event.data == "VIEW") {
           wss.broadcast(JSON.stringify(["VIEW"]));
         } else {
@@ -124,6 +210,7 @@ wss.on('connection', function(ws) {
             if (key.slice(-1) == "n")
             {
               res = res.substring(2);
+              query[0] = key.substring(2);
             }
             dbclient.set(key,res);
             console.log("set "+key+"="+res);

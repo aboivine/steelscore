@@ -34,10 +34,18 @@
       var host = "ws://" + window.location.hostname + ":" + window.location.port; 
       var ws = new WebSocket(host);
       ws.onmessage = function (event) {
-        var li = document.createElement('li');
-        li.innerHTML = JSON.parse(event.data);
         //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
-        document.getElementById("pings").innerHTML = JSON.parse(event.data);
+        var scores = JSON.parse(event.data);
+        if (scores instanceof Array)
+        {
+          var cell = document.getElementById(scores[0]);
+          if (cell != null) {
+             cell.value = scores[1];
+          }
+        } else
+        {
+           document.getElementById("pings").innerHTML = JSON.parse(event.data);
+        }
       };
       function sendPoint() {
         ws.send("Point");
@@ -62,6 +70,11 @@
 
         ws.send(key + ":" + document.getElementById(key).value);
       }
+
+      window.onload=function(){
+        ws.send("GETI");
+      };
+
     </script>
   </head>
   <body>
