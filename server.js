@@ -1,4 +1,5 @@
 var dbclient=null;
+var round = 1;
 var scores = new Array();
 scores[0] = 0;
 scores[1] = 0;
@@ -11,7 +12,7 @@ function sendAll() {
 
      var key = "";
      if (l == 1) {
-       key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
+       key = round.toString() + "-" + i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
      } else {
        key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";
      }
@@ -89,8 +90,15 @@ wss.on('connection', function(ws) {
           scores[0]++;
         } else if (event.data == "1") {
           scores[1]++;
-        } else if (event.data == "TABLE") {
-          wss.broadcast(JSON.stringify(["TABLE"]));
+        } else if (event.data == "ROUND1") {
+          wss.broadcast(JSON.stringify(["ROUND1"]));
+          round = 1;
+        } else if (event.data == "ROUND2") {
+          wss.broadcast(JSON.stringify(["ROUND2"]));
+          round = 2;
+        } else if (event.data == "ROUND3") {
+          wss.broadcast(JSON.stringify(["ROUND3"]));
+          round = 3;
         } else if (event.data == "GET") {
           sendAll();
         } else if (event.data == "VIEW") {
@@ -112,8 +120,13 @@ wss.on('connection', function(ws) {
                wss.broadcast(JSON.stringify(snd));
             });
             }else{
-            dbclient.set(key,key+":"+value);
-            console.log("set "+key+"="+key+":"+value);
+            var res = key+":"+value;
+            if (key.slice(-1) == "n")
+            {
+              res = res.substring(2);
+            }
+            dbclient.set(key,res);
+            console.log("set "+key+"="+res);
             wss.broadcast(JSON.stringify(query));
            }
           }
