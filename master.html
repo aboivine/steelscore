@@ -66,8 +66,6 @@
         ws.send("VIEW");
       }
       function sendResult(key) {
-        //alert(document.getElementById(key).value);
-
         ws.send(key + ":" + document.getElementById(key).value);
       }
 
@@ -84,6 +82,25 @@
     <button onclick="displayTable1()">ROUND 1</button>
     <button onclick="displayTable2()">ROUND 2</button>
     <button onclick="displayTable3()">ROUND 3</button>
+    <br>
+      <input type="radio" name="category" value="SB" onchange="sendResult(this.name)">Sword &amp; Shield &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <input type="radio" name="category" value="LS" onchange="sendResult(this.name)">Longsword &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <input type="radio" name="category" value="PA" onchange="sendResult(this.name)">Polearm
+
+    <br>
+      <input type="radio" name="side-0" value="F1" onchange="sendResult(this.name)">F1  |  F1<input type="radio" name="side-1" value="F1" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="F2" onchange="sendResult(this.name)">F2  |  F2<input type="radio" name="side-1" value="F2" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="F3" onchange="sendResult(this.name)">F3  |  F3<input type="radio" name="side-1" value="F3" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="F4" onchange="sendResult(this.name)">F4  |  F4<input type="radio" name="side-1" value="F4" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="F5" onchange="sendResult(this.name)">F5  |  F5<input type="radio" name="side-1" value="F5" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="F6" onchange="sendResult(this.name)">F6  |  F6<input type="radio" name="side-1" value="F6" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="F7" onchange="sendResult(this.name)">F7  |  F7<input type="radio" name="side-1" value="F7" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="F8" onchange="sendResult(this.name)">F8  |  F8<input type="radio" name="side-1" value="F8" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="F9" onchange="sendResult(this.name)">F9  |  F9<input type="radio" name="side-1" value="F9" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="T1" onchange="sendResult(this.name)">T1  |  T1<input type="radio" name="side-1" value="T1" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="T2" onchange="sendResult(this.name)">T2  |  T2<input type="radio" name="side-1" value="T2" onchange="sendResult(this.name)"><br>
+      <input type="radio" name="side-0" value="T3" onchange="sendResult(this.name)">T3  |  T3<input type="radio" name="side-1" value="T3" onchange="sendResult(this.name)">
+
     <h1>Score:</h1>
     <h2><div id='pings' onchange="sendResult(this.id)"></div></h2>
 

@@ -159,11 +159,17 @@ div{
         var scores = JSON.parse(event.data);
 
         if (scores[0] == "ROUND1") {
-          window.location.replace('/table.html');
+          //window.location.replace('/table.html');
+          document.getElementById("phase").innerHTML = "Duel Fight - Round 1";
+          ws.send("GET");
         } else if (scores[0] == "ROUND2") {
-          window.location.replace('/table.html');
+          //window.location.replace('/table.html');
+          document.getElementById("phase").innerHTML = "Duel Fight - Round 2";
+          ws.send("GET");
         } else if (scores[0] == "ROUND3") {
-          window.location.replace('/table.html');
+          //window.location.replace('/table.html');
+          document.getElementById("phase").innerHTML = "Duel Fight - Round 3";
+          ws.send("GET");
         } else if (scores[0] == "VIEW") {
           window.location.replace('/viewer.html');
         } else {
@@ -173,25 +179,35 @@ div{
           }
        }
       };
+
+      function tryGet() {
+        if (ws.readyState == OPEN)
+        { 
+           ws.send("GET");
+        } else {
+          setTimeout(tryGet(), 3000);
+        }
+      }
+
       window.onload=function(){
-        ws.send("GET");
+        tryGet();
       };
     </script>
   </head>
   <body>
     <div class="view">
     <table>
-      <tr></tr>
-      <tr></tr>
+      <tr id="category"></tr>
+      <tr id="phase"></tr>
     </table>
     </div>
     <div class="view">
     <table>
       <tr>
         <td>Team1</td>
-        <td>Tanaka</td>
+        <td id="side-0"></td>
         <td>VS</td>
-        <td>Joshua</td>
+        <td id="side-1"></td>
         <td>Team2</td>
       </tr>
       <tr>
