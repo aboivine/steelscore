@@ -181,6 +181,7 @@ div{
       };
 
       function tryGet() {
+       alert("tryGet");
         if (ws.readyState == OPEN)
         { 
            ws.send("GET");
