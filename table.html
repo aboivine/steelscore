@@ -151,7 +151,11 @@ div{
     <script>
       //var host = window.location.origin.replace(/^http/, 'ws')
       var host = "ws://" + window.location.hostname + ":" + window.location.port; 
-      var ws = new WebSocket(host);
+      var ws = null;
+
+      
+      window.onload=function(){
+      ws = new WebSocket(host);
       ws.onmessage = function (event) {
         //var li = document.createElement('li');
         //li.innerHTML = JSON.parse(event.data);
@@ -180,6 +184,11 @@ div{
        }
       };
 
+       ws.onopen = function (event) {
+           ws.send("GET");
+       }
+      }
+
       function tryGet() {
        alert("tryGet");
         if (ws.readyState == 1)
@@ -190,9 +199,6 @@ div{
         }
       }
 
-      window.onload=function(){
-        tryGet();
-      };
     </script>
   </head>
   <body>

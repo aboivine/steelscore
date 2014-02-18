@@ -97,7 +97,7 @@ function sendAll() {
      var key = "";
      if (l == 1) {
        key = round.toString() + "-" + i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
-       blank[0]=key;
+       blank[0]=i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
        wss.broadcast(JSON.stringify(blank));
      } else {
        key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";

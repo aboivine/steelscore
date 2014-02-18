@@ -32,7 +32,12 @@
     <script>
       //var host = window.location.origin.replace(/^http/, 'ws')
       var host = "ws://" + window.location.hostname + ":" + window.location.port; 
-      var ws = new WebSocket(host);
+      //var ws = new WebSocket(host);
+      var ws = null;
+
+      
+      window.onload=function(){
+      ws = new WebSocket(host);
       ws.onmessage = function (event) {
         //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
         var scores = JSON.parse(event.data);
@@ -47,6 +52,10 @@
            document.getElementById("pings").innerHTML = JSON.parse(event.data);
         }
       };
+      ws.onopen = function (event) {
+        ws.send("GETI");
+      };
+      }
       function sendPoint() {
         ws.send("Point");
       }
@@ -81,9 +90,6 @@
         }
       }
 
-      window.onload=function(){
-        tryGet();
-      };
 
     </script>
   </head>
