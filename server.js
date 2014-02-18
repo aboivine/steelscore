@@ -86,6 +86,9 @@ function sendAllIII()
 }
 
 function sendAll() {
+   var blank = new Array();
+   blank[0] = "";
+   blank[1] = " ";
    for (var i = 1; i <=3; i++) {
    for (var j = 1; j <=3; j++) {
    for (var k = 1; k <=3; k++) {
@@ -94,6 +97,8 @@ function sendAll() {
      var key = "";
      if (l == 1) {
        key = round.toString() + "-" + i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
+       blank[0]=key;
+       wss.broadcast(JSON.stringify(blank));
      } else {
        key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";
      }
@@ -153,7 +158,11 @@ console.log('websocket server created');
 
 wss.broadcast = function(data) {
     for(var i in this.clients)
+    {
+      if(this.clients[i].readyState == 1){
         this.clients[i].send(data);
+      }
+    }
 };
 
 wss.on('connection', function(ws) {

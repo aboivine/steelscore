@@ -73,7 +73,7 @@
       }
 
       function tryGet() {
-        if (ws.readyState == OPEN)
+        if (ws.readyState == 1)
         { 
            ws.send("GETI");
         } else {
