@@ -68,7 +68,7 @@
       function sendResult(key) {
         ws.send(key + ":" + document.getElementById(key).value);
       }
-      function sendResult(key,value) {
+      function sendResults(key,value) {
         ws.send(key + ":" + value);
       }
 
@@ -95,23 +95,23 @@
     <button onclick="displayTable2()">ROUND 2</button>
     <button onclick="displayTable3()">ROUND 3</button>
     <br>
-      <input type="radio" name="category" value="SB" onchange="sendResult(this.name, this.value)">Sword &amp; Shield &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-      <input type="radio" name="category" value="LS" onchange="sendResult(this.name, this.value)">Longsword &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-      <input type="radio" name="category" value="PA" onchange="sendResult(this.name, this.value)">Polearm
+      <input type="radio" name="category" value="SB" onchange="sendResults(this.name, this.value)">Sword &amp; Shield &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <input type="radio" name="category" value="LS" onchange="sendResults(this.name, this.value)">Longsword &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <input type="radio" name="category" value="PA" onchange="sendResults(this.name, this.value)">Polearm
 
     <br>
-      <input type="radio" name="side-0" value="F1" onchange="sendResult(this.name, this.value)">F1  |  F1<input type="radio" name="side-1" value="F1" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="F2" onchange="sendResult(this.name, this.value)">F2  |  F2<input type="radio" name="side-1" value="F2" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="F3" onchange="sendResult(this.name, this.value)">F3  |  F3<input type="radio" name="side-1" value="F3" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="F4" onchange="sendResult(this.name, this.value)">F4  |  F4<input type="radio" name="side-1" value="F4" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="F5" onchange="sendResult(this.name, this.value)">F5  |  F5<input type="radio" name="side-1" value="F5" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="F6" onchange="sendResult(this.name, this.value)">F6  |  F6<input type="radio" name="side-1" value="F6" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="F7" onchange="sendResult(this.name, this.value)">F7  |  F7<input type="radio" name="side-1" value="F7" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="F8" onchange="sendResult(this.name, this.value)">F8  |  F8<input type="radio" name="side-1" value="F8" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="F9" onchange="sendResult(this.name, this.value)">F9  |  F9<input type="radio" name="side-1" value="F9" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="T1" onchange="sendResult(this.name, this.value)">T1  |  T1<input type="radio" name="side-1" value="T1" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="T2" onchange="sendResult(this.name, this.value)">T2  |  T2<input type="radio" name="side-1" value="T2" onchange="sendResult(this.name, this.value)"><br>
-      <input type="radio" name="side-0" value="T3" onchange="sendResult(this.name, this.value)">T3  |  T3<input type="radio" name="side-1" value="T3" onchange="sendResult(this.name, this.value)">
+      <input type="radio" name="side-0" value="F1" onchange="sendResults(this.name, this.value)">F1  |  F1<input type="radio" name="side-1" value="F1" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="F2" onchange="sendResults(this.name, this.value)">F2  |  F2<input type="radio" name="side-1" value="F2" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="F3" onchange="sendResults(this.name, this.value)">F3  |  F3<input type="radio" name="side-1" value="F3" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="F4" onchange="sendResults(this.name, this.value)">F4  |  F4<input type="radio" name="side-1" value="F4" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="F5" onchange="sendResults(this.name, this.value)">F5  |  F5<input type="radio" name="side-1" value="F5" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="F6" onchange="sendResults(this.name, this.value)">F6  |  F6<input type="radio" name="side-1" value="F6" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="F7" onchange="sendResults(this.name, this.value)">F7  |  F7<input type="radio" name="side-1" value="F7" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="F8" onchange="sendResults(this.name, this.value)">F8  |  F8<input type="radio" name="side-1" value="F8" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="F9" onchange="sendResults(this.name, this.value)">F9  |  F9<input type="radio" name="side-1" value="F9" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="T1" onchange="sendResults(this.name, this.value)">T1  |  T1<input type="radio" name="side-1" value="T1" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="T2" onchange="sendResults(this.name, this.value)">T2  |  T2<input type="radio" name="side-1" value="T2" onchange="sendResults(this.name, this.value)"><br>
+      <input type="radio" name="side-0" value="T3" onchange="sendResults(this.name, this.value)">T3  |  T3<input type="radio" name="side-1" value="T3" onchange="sendResults(this.name, this.value)">
 
     <h1>Score:</h1>
     <h2><div id='pings' onchange="sendResult(this.id)"></div></h2>
