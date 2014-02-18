@@ -158,15 +158,17 @@ div{
         //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
         var scores = JSON.parse(event.data);
 
-        if (scores[0] == "TABLE") {
+        if (scores[0] == "ROUND1") {
           window.location.replace('/table.html');
-          //getAll();
+        } else if (scores[0] == "ROUND2") {
+          window.location.replace('/table.html');
+        } else if (scores[0] == "ROUND3") {
+          window.location.replace('/table.html');
         } else if (scores[0] == "VIEW") {
           window.location.replace('/viewer.html');
         } else {
           var cell = document.getElementById(scores[0]);
           if (cell != null) {
-          alert(cell);
              cell.innerHTML = scores[1];
           }
        }

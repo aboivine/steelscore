@@ -25,13 +25,20 @@
     </style>
 
     <script>
-      //var host = window.location.origin.replace(/^http/, 'ws')
+      var ws = null;
       var side = getParameterByName("side");
-      var host = "ws://" + window.location.hostname + ":" + window.location.port; 
-      var ws = new WebSocket(host);
-      ws.onmessage = function (event) {
-        document.getElementById("count").innerHTML = JSON.parse(event.data);
-      };
+      //var host = window.location.origin.replace(/^http/, 'ws')
+
+      function openWebSocket(){
+        var host = "ws://" + window.location.hostname + ":" + window.location.port; 
+        ws = new WebSocket(host);
+        ws.onmessage = function (event) {
+          document.getElementById("count").innerHTML = JSON.parse(event.data);
+        };
+      }
+
+      openWebSocket();
+
       function sendPoint() {
         ws.send(side);
       }
@@ -42,6 +49,15 @@
               results = regex.exec(window.location.search);
           return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
+
+      ws.onclose = function (event) {            
+         retryOpeningWebSocket();
+      };
+ 
+      function retryOpeningWebSocket(){
+        setTimeout(openWebSocket, 1000);            
+      }
+
     </script>
   </head>
   <body>
