@@ -176,10 +176,21 @@ div{
           ws.send("GET");
         } else if (scores[0] == "VIEW") {
           window.location.replace('/viewer.html');
+        } else if (scores.length == 3 && scores[2] == -1) {
+            document.getElementById("score0").innerHTML = scores[0];
+            document.getElementById("score1").innerHTML = scores[1];
         } else {
           var cell = document.getElementById(scores[0]);
           if (cell != null) {
              cell.innerHTML = scores[1];
+             if (scores[0] == "side-0") {
+               var img = document.getElementById("img0");
+               img.src = scores[1] + ".png";
+             }
+             else if (scores[0] == "side-1") {
+               var img = document.getElementById("img1");
+               img.src = scores[1] + ".png";
+             }
           }
        }
       };
@@ -211,17 +222,17 @@ div{
     <div class="view">
     <table>
       <tr>
-        <td>Team1</td>
+        <td><img id="img0" src="smiley.gif" height="42" width="42"></td>
         <td id="side-0"></td>
         <td>VS</td>
-        <td id="side-1"></td>
-        <td>Team2</td>
+        <td><img id="img1" src="smiley.gif" height="42" width="42"></td>
+        <td id="img-1">Team2</td>
       </tr>
       <tr>
         <td></td>
-        <td>123</td>
+        <td id="score0"></td>
         <td></td>
-        <td>345</td>
+        <td id="score1"></td>
         <td></td>
       </tr>
     </table>
@@ -232,7 +243,7 @@ div{
         <th colspan="6" style="border-width:1px;border-style:solid;">Sword &amp; Shield</th>
         <th colspan="6" style="border-width:1px;border-style:solid;">Longsword</th>
         <th colspan="6" style="border-width:1px;border-style:solid;">Poleaxe</th></tr>
-      <tr><th rowspan="2">Team1</th>
+      <tr><th rowspan="2"><img src="T1.png" height="42" width="42"></th>
           <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
@@ -265,7 +276,7 @@ div{
           <td id="1-3-3-t" width="14px" style="border-style:dotted solid solid dotted;"></td>
       </tr>
 
-      <tr><th rowspan="2">Team2</th>
+      <tr><th rowspan="2"><img src="T2.png" height="42" width="42"></th>
           <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
@@ -298,7 +309,7 @@ div{
           <td id="2-3-3-t" width="14px" style="border-style:dotted solid solid dotted;"></td>
       </tr>
 
-      <tr><th rowspan="2">Team3</th>
+      <tr><th rowspan="2"><img src="T3.png" height="42" width="42"></th>
           <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>

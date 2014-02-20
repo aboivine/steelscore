@@ -3,6 +3,7 @@ var round = 1;
 var scores = new Array();
 scores[0] = 0;
 scores[1] = 0;
+scores[2] = -1;
 
 function sendAllI()
 {
@@ -168,7 +169,7 @@ wss.broadcast = function(data) {
 wss.on('connection', function(ws) {
     var id = setInterval(function() {
         wss.broadcast(JSON.stringify(scores));
-    }, 300);
+    }, 400);
 
     console.log('websocket connection open');
 

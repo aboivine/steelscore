@@ -46,10 +46,12 @@
           var cell = document.getElementById(scores[0]);
           if (cell != null) {
              cell.value = scores[1];
+          } else if (scores.length == 3 && scores[2] == -1) {
+            document.getElementById("score0").innerHTML = scores[0];
+            document.getElementById("score1").innerHTML = scores[1];
           }
         } else
         {
-           document.getElementById("pings").innerHTML = JSON.parse(event.data);
         }
       };
       ws.onopen = function (event) {
@@ -100,6 +102,11 @@
     <button onclick="displayTable1()">ROUND 1</button>
     <button onclick="displayTable2()">ROUND 2</button>
     <button onclick="displayTable3()">ROUND 3</button>
+
+    <h1>Score:</h1>
+    <h2><div id='score0'></div> VS 
+        <div id='score1'></div></h2>
+
     <br>
       <input type="radio" name="category" value="SB" onchange="sendResults(this.name, this.value)">Sword &amp; Shield &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       <input type="radio" name="category" value="LS" onchange="sendResults(this.name, this.value)">Longsword &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -118,9 +125,6 @@
       <input type="radio" name="side-0" value="T1" onchange="sendResults(this.name, this.value)">T1  |  T1<input type="radio" name="side-1" value="T1" onchange="sendResults(this.name, this.value)"><br>
       <input type="radio" name="side-0" value="T2" onchange="sendResults(this.name, this.value)">T2  |  T2<input type="radio" name="side-1" value="T2" onchange="sendResults(this.name, this.value)"><br>
       <input type="radio" name="side-0" value="T3" onchange="sendResults(this.name, this.value)">T3  |  T3<input type="radio" name="side-1" value="T3" onchange="sendResults(this.name, this.value)">
-
-    <h1>Score:</h1>
-    <h2><div id='pings' onchange="sendResult(this.id)"></div></h2>
 
 <div class="view">
     <table>
