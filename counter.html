@@ -8,7 +8,7 @@
       }
 
       button {
-        width: 100%; 
+        width: 80%; 
         height: 300px; 
       }
     </style>
@@ -28,7 +28,7 @@
   
           if (scores.length == 3 && scores[2] == -1) {
               document.getElementById("count").innerHTML = scores[side];
-          };
+          }
       }
 
       openWebSocket();
@@ -46,7 +46,7 @@
       }
 
       ws.onclose = function (event) {            
-         retryOpeningWebSocket();
+  //       retryOpeningWebSocket();
       };
  
       function retryOpeningWebSocket(){
