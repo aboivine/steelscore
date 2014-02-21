@@ -1,6 +1,6 @@
 <html>
   <head>
-    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no" />
+   <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no" />
     <style>
       body {
         margin:0px;padding:0px;
@@ -8,33 +8,31 @@
       }
 
       button {
-        width: 80%; 
-        height: 300px; 
+        width: 100%;
+        height: 300px;
       }
     </style>
 
     <script>
       var ws = null;
       var side = getParameterByName("side");
-      //var host = window.location.origin.replace(/^http/, 'ws')
+      var host = window.location.origin.replace(/^http/, 'ws')
 
       function openWebSocket(){
         var host = "ws://" + window.location.hostname + ":" + window.location.port; 
         ws = new WebSocket(host);
         ws.onmessage = function (event) {
-          //  document.getElementById("count").innerHTML = JSON.parse(event.data);
+           //document.getElementById("count").innerHTML = JSON.parse(event.data);
           var scores = JSON.parse(event.data);
-          alert(scores.length.toString()+"-"+scores[2].toString()+"-"+side.toString()+"-"+scores[side].toString());
-  
+          //alert(scores.length.toString()+"-"+scores[2].toString()+"-"+side.toString()+"-"+scores[side].toString());
           if (scores.length == 3 && scores[2] == -1) {
-              document.getElementById("count").innerHTML = scores[side];
-          }
+              document.getElementById("count").innerHTML = scores[side];}
+        }
       }
 
       openWebSocket();
 
       function sendPoint() {
-        alert(side);
         ws.send(side);
       }
 
@@ -46,7 +44,7 @@
       }
 
       ws.onclose = function (event) {            
-  //       retryOpeningWebSocket();
+         retryOpeningWebSocket();
       };
  
       function retryOpeningWebSocket(){
