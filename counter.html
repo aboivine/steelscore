@@ -8,8 +8,8 @@
       }
 
       button {
-        width: 400px; 
-        height: 400px; 
+        width: 100%; 
+        height: 300px; 
       }
     </style>
 
@@ -22,8 +22,12 @@
         var host = "ws://" + window.location.hostname + ":" + window.location.port; 
         ws = new WebSocket(host);
         ws.onmessage = function (event) {
-          document.getElementById("count").innerHTML = JSON.parse(event.data);
-        };
+          //  document.getElementById("count").innerHTML = JSON.parse(event.data);
+          var scores = JSON.parse(event.data);
+  
+          if (scores.length == 3 && scores[2] == -1) {
+              document.getElementById("count").innerHTML = scores[side];
+          };
       }
 
       openWebSocket();

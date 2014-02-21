@@ -96,8 +96,6 @@
     </script>
   </head>
   <body>
-    <button onclick="sendPoint(0)">POINT!</button>
-    <button onclick="sendPoint(1)">POINT!</button>
     <button onclick="sendReset()">RESET</button>
     <button onclick="displayView()">VIEW</button>
     <button onclick="displayTable1()">ROUND 1</button>
@@ -105,8 +103,8 @@
     <button onclick="displayTable3()">ROUND 3</button>
 
     <h1>Score:</h1>
-    <h2><button onclick="sendPoint(0)">-</button><button onclick="sendPoint(2)">+</button><div id='score0'></div> VS 
-        <div id='score1'></div><button onclick="sendPoint(1)">-</button><button onclick="sendPoint(3)">+</button></h2>
+    <h2><button onclick="sendPoint(2)">-</button><button onclick="sendPoint(0)">+</button><div id='score0'></div> VS 
+        <div id='score1'></div><button onclick="sendPoint(3)">-</button><button onclick="sendPoint(1)">+</button></h2>
 
     <br>
       <input type="radio" name="category" value="SWORD & SHIELD" onchange="sendResults(this.name, this.value)">Sword &amp; Shield &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;

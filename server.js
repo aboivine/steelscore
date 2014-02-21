@@ -4,6 +4,9 @@ var scores = new Array();
 scores[0] = 0;
 scores[1] = 0;
 scores[2] = -1;
+var f0name = "";
+var f1name = "";
+var catname = "";
 
 function sendAllI()
 {
@@ -197,6 +200,26 @@ wss.on('connection', function(ws) {
           round = 3;
         } else if (event.data == "GET") {
           sendAll();
+          var info = new Array();
+          info[0] = "category";
+          info[1] = catname;
+          wss.broadcast(JSON.stringify(info));
+
+          info[0] = "side-0";
+          info[1] = f0name;
+          wss.broadcast(JSON.stringify(info));
+
+          info[0] = "side-1";
+          info[1] = f1name;
+          wss.broadcast(JSON.stringify(info));
+
+          if (round == 1) {
+             wss.broadcast(JSON.stringify(["ROUND1"]));
+          } else if (round == 2) {
+             wss.broadcast(JSON.stringify(["ROUND2"]));
+          } else if (round == 3) {
+             wss.broadcast(JSON.stringify(["ROUND3"]));
+          }
         } else if (event.data == "GETI") {
           sendAllI();
           sendAllII();
@@ -211,24 +234,31 @@ wss.on('connection', function(ws) {
             var value = query[1];
             if(value == "?")
             {
-            dbclient.get(key, function(err, reply) {
-               var snd = new Array();
-               snd[0] = key;
-               snd[1] =reply ;
-            console.log("New request");
-            console.log(JSON.stringify(snd));
-               wss.broadcast(JSON.stringify(snd));
+              dbclient.get(key, function(err, reply) {
+                 var snd = new Array();
+                 snd[0] = key;
+                 snd[1] =reply ;
+              console.log("New request");
+              console.log(JSON.stringify(snd));
+              wss.broadcast(JSON.stringify(snd));
             });
             }else{
-            var res = key+":"+value;
-            if (key.slice(-1) == "n")
-            {
-              res = res.substring(2);
-              query[0] = key.substring(2);
-            }
-            dbclient.set(key,res);
-            console.log("set "+key+"="+res);
-            wss.broadcast(JSON.stringify(query));
+              var res = key+":"+value;
+              if (key.slice(-1) == "n")
+              {
+                res = res.substring(2);
+                query[0] = key.substring(2);
+              } else if (key == "category") {
+                catname = value;
+              } else if (key == "side-0") {
+                f0name = value;
+              } else if (key == "side-1") {
+                f1name = value;
+              }
+
+              dbclient.set(key,res);
+              console.log("set "+key+"="+res);
+              wss.broadcast(JSON.stringify(query));
            }
           }
         }
