@@ -37,8 +37,9 @@
    padding-right:48px;
    text-align:center;
 }
+
 .fscore {
-   background-color:white;
+   background:white;
    color:black;
    font-weight:bold;
     font-size:64px;
@@ -61,7 +62,24 @@
     -webkit-border-top-left-radius:4px;
     border-top-left-radius:4px;
 
+    animation:myfirst 1s;
+    -webkit-animation:myfirst 1s; /* Safari and Chrome */
 }
+
+@keyframes myfirst
+{
+0%   {background:white;}
+20%  {background:#A00000;}
+100% {background:white;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+0%   {background:white;}
+20%  {background:#A00000;}
+100% {background:white;}
+}
+
 .fname {
    background-color:black;
    color:white;
@@ -256,6 +274,13 @@ div{
         } else {
           var cell = document.getElementById(scores[0]);
           if (cell != null) {
+             if (scores[0] == "score0") {
+               cell.className = "fscore";
+             }
+             else if (scores[0] == "score1") {
+               cell.className = "fscore";
+             }
+
              cell.innerHTML = scores[1];
              if (scores[0] == "side-0") {
                var img = document.getElementById("img0");
