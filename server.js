@@ -182,6 +182,10 @@ wss.on('connection', function(ws) {
           scores[0]++;
         } else if (event.data == "1") {
           scores[1]++;
+        } else if (event.data == "2") {
+          scores[0]--;
+        } else if (event.data == "3") {
+          scores[1]--;
         } else if (event.data == "ROUND1") {
           wss.broadcast(JSON.stringify(["ROUND1"]));
           round = 1;

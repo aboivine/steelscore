@@ -58,8 +58,8 @@
         ws.send("GETI");
       };
       }
-      function sendPoint() {
-        ws.send("Point");
+      function sendPoint(side) {
+        ws.send(side);
       }
       function sendReset() {
         ws.send("Reset");
@@ -96,7 +96,8 @@
     </script>
   </head>
   <body>
-    <button onclick="sendPoint()">POINT!</button>
+    <button onclick="sendPoint(0)">POINT!</button>
+    <button onclick="sendPoint(1)">POINT!</button>
     <button onclick="sendReset()">RESET</button>
     <button onclick="displayView()">VIEW</button>
     <button onclick="displayTable1()">ROUND 1</button>
@@ -104,8 +105,8 @@
     <button onclick="displayTable3()">ROUND 3</button>
 
     <h1>Score:</h1>
-    <h2><div id='score0'></div> VS 
-        <div id='score1'></div></h2>
+    <h2><button onclick="sendPoint(0)">-</button><button onclick="sendPoint(2)">+</button><div id='score0'></div> VS 
+        <div id='score1'></div><button onclick="sendPoint(1)">-</button><button onclick="sendPoint(3)">+</button></h2>
 
     <br>
       <input type="radio" name="category" value="SWORD & SHIELD" onchange="sendResults(this.name, this.value)">Sword &amp; Shield &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -133,12 +134,12 @@
         <th colspan="6" style="border-width:1px;border-style:solid;">Sword &amp; Shield</th>
         <th colspan="6" style="border-width:1px;border-style:solid;">Longsword</th>
         <th colspan="6" style="border-width:1px;border-style:solid;">Poleaxe</th></tr>
-      <tr><th rowspan="2">Team1</th>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+      <tr><th rowspan="2">Dracones</th>
+          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka.J</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+          <td colspan="3" style="border-style:dotted solid;"><div>Tada</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+          <td colspan="3" style="border-style:dotted solid;"><div>Tony</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
       </tr>
 
@@ -162,12 +163,12 @@
       </tr>
 
 
-      <tr><th rowspan="2">Team2</th>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+      <tr><th rowspan="2">Sanglier</th>
+          <td colspan="3" style="border-style:dotted solid;"><div>Joshua</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+          <td colspan="3" style="border-style:dotted solid;"><div>Satou</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+          <td colspan="3" style="border-style:dotted solid;"><div>Ami</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
       </tr>
 
@@ -191,12 +192,12 @@
       </tr>
 
 
-      <tr><th rowspan="2">Team3</th>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+      <tr><th rowspan="2">Kuroganeshu</th>
+          <td colspan="3" style="border-style:dotted solid;"><div>???</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka.k</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;"><div>Tanaka</div></td>
+          <td colspan="3" style="border-style:dotted solid;"><div>???</div></td>
           <td colspan="3" style="border-style:dotted solid;"><div>Total</div></td>
       </tr>
       <tr><td><input size="3" id="1-3-1-1-n" type="text" onchange="sendResult(this.id)"></input></td>
