@@ -38,6 +38,31 @@
    text-align:center;
 }
 
+.fanim {
+   background:white;
+   color:black;
+   font-weight:bold;
+    font-size:64px;
+
+    border:2px solid black;
+
+    -moz-border-radius-bottomleft:4px;
+    -webkit-border-bottom-left-radius:4px;
+    border-bottom-left-radius:4px;
+
+    -moz-border-radius-bottomright:4px;
+    -webkit-border-bottom-right-radius:4px;
+    border-bottom-right-radius:4px;
+
+    -moz-border-radius-topright:4px;
+    -webkit-border-top-right-radius:4px;
+    border-top-right-radius:4px;
+
+    -moz-border-radius-topleft:4px;
+    -webkit-border-top-left-radius:4px;
+    border-top-left-radius:4px;
+}
+
 .fscore {
    background:white;
    color:black;
@@ -244,7 +269,6 @@ div{
       //var host = window.location.origin.replace(/^http/, 'ws')
       var host = "ws://" + window.location.hostname + ":" + window.location.port; 
       var ws = null;
-
       
       window.onload=function(){
       ws = new WebSocket(host);
@@ -276,9 +300,11 @@ div{
           if (cell != null) {
              if (scores[0] == "score0") {
                cell.className = "fscore";
+               setTimeout(function() { resetAnim0(); },1100);
              }
              else if (scores[0] == "score1") {
                cell.className = "fscore";
+               setTimeout(function() { resetAnim1(); },1100);
              }
 
              cell.innerHTML = scores[1];
@@ -300,7 +326,6 @@ div{
       }
 
       function tryGet() {
-       alert("tryGet");
         if (ws.readyState == 1)
         { 
            ws.send("GET");
@@ -308,6 +333,25 @@ div{
           setTimeout(tryGet(), 3000);
         }
       }
+
+      function resetAnim0() {
+        var cell = document.getElementById("score0");
+        cell.className="fanim";
+      }
+
+      function resetAnim1() {
+        var cell = document.getElementById("score1");
+        cell.className="fanim";
+      }
+
+      function test1() {
+          var cell = document.getElementById("score0");
+          if (cell != null) {
+             cell.className = "fscore";
+             cell.innerHTML = "1";
+             setTimeout(function() { resetAnim(); },1100);
+          }
+        }
 
     </script>
   </head>
@@ -322,9 +366,9 @@ div{
     <table>
       <tr>
         <td rowspan="2" style="float:right;"><img id="img0" src="smiley.gif" height="180" width="146"></td>
-        <td width="90px"><div id="score0" class="fscore" style="float:right;width:90px;"></div></td>
+        <td width="90px"><div id="score0" class="fanim" style="float:right;width:90px;"></div></td>
         <td rowspan="2"><div class="vs">VS</div></td>
-        <td width="90px"><div id="score1" class="fscore" style="float:left;width:90px;"></div></td>
+        <td width="90px"><div id="score1" class="fanim" style="float:left;width:90px;"></div></td>
         <td rowspan="2" style="float:left;"><img id="img1" src="smiley.gif" height="180" width="146"></td>
       </tr>
       <tr>
