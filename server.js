@@ -212,14 +212,6 @@ wss.on('connection', function(ws) {
           info[0] = "side-1";
           info[1] = f1name;
           wss.broadcast(JSON.stringify(info));
-
-          if (round == 1) {
-             wss.broadcast(JSON.stringify(["ROUND1"]));
-          } else if (round == 2) {
-             wss.broadcast(JSON.stringify(["ROUND2"]));
-          } else if (round == 3) {
-             wss.broadcast(JSON.stringify(["ROUND3"]));
-          }
         } else if (event.data == "GETI") {
           sendAllI();
           sendAllII();
