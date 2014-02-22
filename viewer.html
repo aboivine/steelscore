@@ -90,8 +90,8 @@
     -webkit-border-top-left-radius:18px;
     border-top-left-radius:18px;
 
-    animation:myfirst 1s;
-    -webkit-animation:myfirst 1s; /* Safari and Chrome */
+    animation:myfirst 0.6s;
+    -webkit-animation:myfirst 0.6s; /* Safari and Chrome */
 }
 
 @keyframes myfirst
@@ -304,18 +304,18 @@ div{
           //window.location.replace('/table.html');
           document.getElementById("phase").innerHTML = "Duel Fight - Round 3";
           ws.send("GET");
-        } else if (scores[0] == "VIEW") {
-          window.location.replace('/viewer.html');
+        } else if (scores[0] == "TABLE") {
+          window.location.replace('/table.html');
         } else if (scores.length == 3 && scores[2] == -1) {
             var cell0 = document.getElementById("score0");
             var cell1 = document.getElementById("score1");
             if (cell0.innerHTML != scores[0]){
                  cell0.className = "fscore";
-                 setTimeout(function() { resetAnim0(); },1100);
+                 setTimeout(function() { resetAnim0(); },500);
             } 
             if (cell1.innerHTML != scores[1]){
                  cell1.className = "fscore";
-                 setTimeout(function() { resetAnim1(); },1100);
+                 setTimeout(function() { resetAnim1(); },500);
             } 
             cell0.innerHTML = scores[0];
             cell1.innerHTML = scores[1];
@@ -380,9 +380,9 @@ div{
     <div class="board">
     <table>
       <tr>
-        <td><div style="float:leftt;"><img id="img0" src="smiley.gif" height="280" width="200"></div><div id="score0" class="fanim" style="float:right;"></div></td>
+        <td><div style="float:leftt;"><img id="img0" src="smiley.gif" height="280" width="200"></div><div id="score0" class="fanim" style="float:right;">0</div></td>
         <td><div class="vs">VS</div></td>
-        <td><div id="score1" class="fanim" style="float:left;"></div><div style="float:right;"><img id="img1" src="smiley.gif" height="280" width="200"></div></td>
+        <td><div id="score1" class="fanim" style="float:left;">0</div><div style="float:right;"><img id="img1" src="smiley.gif" height="280" width="200"></div></td>
       </tr>
       <tr>
         <td width="50%"><div id="side-0" class="fnamel" style="text-align:right;float:right;padding-right:10px;"/></td>

@@ -172,7 +172,7 @@ wss.broadcast = function(data) {
 wss.on('connection', function(ws) {
     var id = setInterval(function() {
         wss.broadcast(JSON.stringify(scores));
-    }, 400);
+    }, 440);
 
     console.log('websocket connection open');
 
@@ -218,6 +218,8 @@ wss.on('connection', function(ws) {
           sendAllIII();
         } else if (event.data == "VIEW") {
           wss.broadcast(JSON.stringify(["VIEW"]));
+        } else if (event.data == "TABLE") {
+          wss.broadcast(JSON.stringify(["TABLE"]));
         } else {
           var query = event.data.split(':');
           if (query.length > 1)

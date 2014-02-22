@@ -76,6 +76,9 @@
       function displayView() {
         ws.send("VIEW");
       }
+      function displayTable() {
+        ws.send("TABLE");
+      }
       function sendResult(key) {
         ws.send(key + ":" + document.getElementById(key).value);
       }
@@ -98,6 +101,7 @@
   <body>
     <button onclick="sendReset()">RESET</button>
     <button onclick="displayView()">VIEW</button>
+    <button onclick="displayTable()">TABLE</button>
     <button onclick="displayTable1()">ROUND 1</button>
     <button onclick="displayTable2()">ROUND 2</button>
     <button onclick="displayTable3()">ROUND 3</button>
