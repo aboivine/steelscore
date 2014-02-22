@@ -153,6 +153,10 @@ app.get("*", function(request, response) {
 });
 
 var server = http.createServer(app);
+server.on('error', function (e) {
+  // Handle your error here
+  console.log("Http server error:" + e);
+});
 server.listen(port);
 
 console.log('http server listening on %d', port);
@@ -168,6 +172,10 @@ wss.broadcast = function(data) {
       }
     }
 };
+
+wss.on('error', function(e) {
+  console.log("WebSoseckt Error:" + e);
+}
 
 wss.on('connection', function(ws) {
     var id = setInterval(function() {
