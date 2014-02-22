@@ -315,6 +315,10 @@ div{
         //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
         var scores = JSON.parse(event.data);
 
+        if (scores[0] == "MELEE") {
+          window.location.replace('/melee.html');
+          ws.send("GET");
+        } else 
         if (scores[0] == "ROUND1") {
           //window.location.replace('/table.html');
           document.getElementById("phase").innerHTML = "Duel Fight - Round 1";

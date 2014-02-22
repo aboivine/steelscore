@@ -4,6 +4,15 @@ var scores = new Array();
 scores[0] = 0;
 scores[1] = 0;
 scores[2] = -1;
+var judges = new Array();
+judges[0] = 0;
+judges[1] = 0;
+judges[2] = -2;
+var savedJ = new Array();
+savedJ[0] = 0;
+savedJ[1] = 0;
+savedJ[2] = 1;
+savedJ[3] = 1;
 var f0name = "";
 var f1name = "";
 var catname = "";
@@ -27,12 +36,11 @@ function sendAllI()
          if (snd[0].slice(-1) == "n"){
             snd[0] = "1-" + snd[0];
          }
-         console.log("New req");
-         console.log(JSON.stringify(snd));
          wss.broadcast(JSON.stringify(snd));
       }});
 
    }}}}
+
 }
 
 function sendAllII()
@@ -54,8 +62,6 @@ function sendAllII()
          if (snd[0].slice(-1) == "n"){
             snd[0] = "2-" + snd[0];
          }
-         console.log("New req");
-         console.log(JSON.stringify(snd));
          wss.broadcast(JSON.stringify(snd));
       }});
 
@@ -81,8 +87,6 @@ function sendAllIII()
          if (snd[0].slice(-1) == "n"){
             snd[0] = "3-" + snd[0];
          }
-         console.log("New req");
-         console.log(JSON.stringify(snd));
          wss.broadcast(JSON.stringify(snd));
       }});
 
@@ -109,12 +113,23 @@ function sendAll() {
       dbclient.get(key, function(err, reply) {
        if (reply!=null){
          var snd = reply.split(":");
-         console.log("New req");
-         console.log(JSON.stringify(snd));
          wss.broadcast(JSON.stringify(snd));
       }});
    
    }}}}
+
+   for (var i = 1; i <=3; i++) {
+   for (var j = 1; j <=9; j++) {
+
+     var key = "m"+i.toString()+"-"+j.toString();
+     dbclient.get(key, function(err, reply) {
+       if (reply!=null){
+         var snd = reply.split(":");
+         wss.broadcast(JSON.stringify(snd));
+      }});
+
+   }}
+
 }
 
 var WebSocketServer = require('ws').Server
@@ -197,6 +212,8 @@ wss.on('connection', function(ws) {
           scores[0]--;
         } else if (event.data == "3") {
           scores[1]--;
+        }else if (event.data == "MELEE") {
+          wss.broadcast(JSON.stringify(["MELEE"]));
         } else if (event.data == "ROUND1") {
           wss.broadcast(JSON.stringify(["ROUND1"]));
           round = 1;
@@ -206,7 +223,31 @@ wss.on('connection', function(ws) {
         } else if (event.data == "ROUND3") {
           wss.broadcast(JSON.stringify(["ROUND3"]));
           round = 3;
-        } else if (event.data == "GET") {
+        } else if (event.data == "GJ0") {
+          var judge = new Array();
+           judge[0]=0;
+           judge[1]=savedJ[0];
+           judge[2]=-2;
+           wss.broadcast(JSON.stringify(judge));
+        }else if (event.data == "GJ1") {
+           var judge = new Array();
+           judge[0]=1;
+           judge[1]=savedJ[1];
+           judge[2]=-2;
+           wss.broadcast(JSON.stringify(judge));
+        }else if (event.data == "GJ2") {
+          var judge = new Array();
+           judge[0]=2;
+           judge[1]=savedJ[2];
+           judge[2]=-2;
+           wss.broadcast(JSON.stringify(judge));
+        }else if (event.data == "GJ3") {
+          var judge = new Array();
+           judge[0]=3;
+           judge[1]=savedJ[3];
+           judge[2]=-2;
+           wss.broadcast(JSON.stringify(judge));
+        }else if (event.data == "GET") {
           sendAll();
           var info = new Array();
           info[0] = "category";
@@ -240,11 +281,37 @@ wss.on('connection', function(ws) {
                  var snd = new Array();
                  snd[0] = key;
                  snd[1] =reply ;
-              console.log("New request");
-              console.log(JSON.stringify(snd));
               wss.broadcast(JSON.stringify(snd));
             });
-            }else{
+            } else if (key == "jid0"){
+               savedJ[0]=value;
+               console.log("SAVED A="+value);
+               judges[0]=0;
+               judges[1]=value;
+               wss.broadcast(JSON.stringify(judges));
+            }
+            else if (key == "jid1"){
+               savedJ[1]=value;
+               console.log("SAVED B="+value);
+               judges[0]=1;
+               judges[1]=value;
+               wss.broadcast(JSON.stringify(judges));
+            }
+            else if (key == "jid2"){
+               savedJ[2]=value;
+               console.log("SAVED C="+value);
+               judges[0]=2;
+               judges[1]=value;
+               wss.broadcast(JSON.stringify(judges));
+            }
+            else if (key == "jid3"){
+               savedJ[3]=value;
+               console.log("SAVED D="+value);
+               judges[0]=3;
+               judges[1]=value;
+               wss.broadcast(JSON.stringify(judges));
+            }
+            else{
               var res = key+":"+value;
               if (key.slice(-1) == "n")
               {

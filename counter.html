@@ -14,10 +14,13 @@
     </style>
 
     <script>
+      var names = new Array();
+      names[0] = "";
+      names[1] = "";
       var ws = null;
-      var side = getParameterByName("side");
-      var host = window.location.origin.replace(/^http/, 'ws')
-
+      var jid = getParameterByName("jid");
+      var side = 0;
+      //var host = window.location.origin.replace(/^http/, 'ws')
       function openWebSocket(){
         var host = "ws://" + window.location.hostname + ":" + window.location.port; 
         ws = new WebSocket(host);
@@ -27,10 +30,36 @@
           //alert(scores.length.toString()+"-"+scores[2].toString()+"-"+side.toString()+"-"+scores[side].toString());
           if (scores.length == 3 && scores[2] == -1) {
               document.getElementById("count").innerHTML = scores[side];}
-        }
-      }
+          else if (scores.length == 3 && scores[2] == -2 && scores[0] == jid) {
+             side = scores[1];
+             document.getElementById("judge").innerHTML = names[side];
+          } else if (scores.length > 1)  {
+             if (scores[0] == "side-0") {
+               names[0] = scores[1];
+               document.getElementById("judge").innerHTML = names[side];
+             } else if (scores[0] == "side-1") {
+               names[1] = scores[1];
+               document.getElementById("judge").innerHTML = names[side];
+             }
+          }
+        };
+       ws.onopen = function (event) {
+          ws.send("GET");
+          if(jid==0){ws.send("GJ0");}
+          else if(jid==1){ws.send("GJ1");}
+          else if(jid==2){ws.send("GJ2");}
+          else if(jid==3){ws.send("GJ3");}
+       };
 
-      openWebSocket();
+     ws.onclose = function (event) {            
+         //retryOpeningWebSocket();
+      };
+
+
+       }
+
+      window.onload=function(){
+      openWebSocket();};
 
       function sendPoint() {
         ws.send(side);
@@ -43,10 +72,6 @@
           return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
 
-      ws.onclose = function (event) {            
-         retryOpeningWebSocket();
-      };
- 
       function retryOpeningWebSocket(){
         setTimeout(function(){openWebSocket();}, 1000);            
       }
@@ -55,7 +80,9 @@
   </head>
   <body>
     <button onclick="sendPoint()">POINT!</button>
-    <h1>Score:</h1>
+    <h1>Counting hits on:</h1>
+    <h2><div id="judge"></div></h2>
+    <h1>Hits:</h1>
     <h2><div id="count"></div></h2>
   </body>
 </html>

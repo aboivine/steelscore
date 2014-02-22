@@ -55,7 +55,7 @@
         }
       };
       ws.onopen = function (event) {
-        ws.send("GETI");
+        ws.send("GET");
       };
       }
       function sendPoint(side) {
@@ -79,6 +79,10 @@
       function displayTable() {
         ws.send("TABLE");
       }
+      function displayMelee() {
+        ws.send("MELEE");
+      }
+
       function sendResult(key) {
         ws.send(key + ":" + document.getElementById(key).value);
       }
@@ -99,12 +103,21 @@
     </script>
   </head>
   <body>
+    A<input type="radio" name="jid0" value="0" onchange="sendResults(this.name, this.value)">0
+    <input type="radio" name="jid0" value="1" onchange="sendResults(this.name, this.value)">1
+    |B<input type="radio" name="jid1" value="0" onchange="sendResults(this.name, this.value)">0
+    <input type="radio" name="jid1" value="1" onchange="sendResults(this.name, this.value)">1
+    |C<input type="radio" name="jid2" value="0" onchange="sendResults(this.name, this.value)">0
+    <input type="radio" name="jid2" value="1" onchange="sendResults(this.name, this.value)">1
+    |D<input type="radio" name="jid3" value="0" onchange="sendResults(this.name, this.value)">0
+    <input type="radio" name="jid3" value="1" onchange="sendResults(this.name, this.value)">1
     <button onclick="sendReset()">RESET</button>
     <button onclick="displayView()">VIEW</button>
     <button onclick="displayTable()">TABLE</button>
     <button onclick="displayTable1()">ROUND 1</button>
     <button onclick="displayTable2()">ROUND 2</button>
     <button onclick="displayTable3()">ROUND 3</button>
+    <button onclick="displayMelee()">MELEE</button>
 
     <h1>Score:</h1>
     <h2><button onclick="sendPoint(2)">-</button><button onclick="sendPoint(0)">+</button><div id='score0'></div> VS 
@@ -408,6 +421,51 @@
       </tr>
 </table>
 </div>
+<div class="view">
+    <table>
+      <tr><th rowspan="1">Dracones</th>
+          <td><input size="3" id="m1-1" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m1-2" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m1-3" type="text" onchange="sendResult(this.id)"></input></td>
+
+          <td><input size="3" id="m1-4" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m1-5" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m1-6" type="text" onchange="sendResult(this.id)"></input></td>
+
+          <td><input size="3" id="m1-7" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m1-8" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m1-9" type="text" onchange="sendResult(this.id)"></input></td>
+      </tr>
+      <tr><th rowspan="1">Sanglier</th>
+          <td><input size="3" id="m2-1" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m2-2" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m2-3" type="text" onchange="sendResult(this.id)"></input></td>
+
+          <td><input size="3" id="m2-4" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m2-5" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m2-6" type="text" onchange="sendResult(this.id)"></input></td>
+
+          <td><input size="3" id="m2-7" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m2-8" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m2-9" type="text" onchange="sendResult(this.id)"></input></td>
+      </tr>
+      <tr><th rowspan="1">Kuroganeshu</th>
+          <td><input size="3" id="m3-1" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m3-2" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m3-3" type="text" onchange="sendResult(this.id)"></input></td>
+
+          <td><input size="3" id="m3-4" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m3-5" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m3-6" type="text" onchange="sendResult(this.id)"></input></td>
+
+          <td><input size="3" id="m3-7" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m3-8" type="text" onchange="sendResult(this.id)"></input></td>
+          <td><input size="3" id="m3-9" type="text" onchange="sendResult(this.id)"></input></td>
+      </tr>
+
+</table>
+</div>
+
 
 
   </body>

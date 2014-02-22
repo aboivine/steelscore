@@ -170,22 +170,12 @@ div{
         var scores = JSON.parse(event.data);
 
         if (scores[0] == "MELEE") {
-          window.location.replace('/melee.html');
-          ws.send("GET");
-        } else
-        if (scores[0] == "ROUND1") {
           //window.location.replace('/table.html');
-          document.getElementById("phase").innerHTML = "Duel Fight - Round 1";
+          document.getElementById("phase").innerHTML = "Group Fight -Melee";
           ws.send("GET");
-        } else if (scores[0] == "ROUND2") {
-          //window.location.replace('/table.html');
-          document.getElementById("phase").innerHTML = "Duel Fight - Round 2";
-          ws.send("GET");
-        } else if (scores[0] == "ROUND3") {
-          //window.location.replace('/table.html');
-          document.getElementById("phase").innerHTML = "Duel Fight - Round 3";
-          ws.send("GET");
-        } else if (scores[0] == "VIEW") {
+        }else if (scores[0] == "TABLE") {
+          window.location.replace('/table.html');
+        }  else if (scores[0] == "VIEW") {
           window.location.replace('/viewer.html');
         } else if (scores.length == 3 && scores[2] == -1) {
             document.getElementById("score0").innerHTML = scores[0];
@@ -251,108 +241,46 @@ div{
     <div class = "view" id="phase">Duel Fight</div>
     <div class = "tftable">
     <table>
-      <tr height="10%">
-        <th style="border-width:1px;border-style:solid;"></th>
-        <th colspan="6" style="border-width:1px;border-style:solid;">Sword &amp; Shield</th>
-        <th colspan="6" style="border-width:1px;border-style:solid;">Longsword</th>
-        <th colspan="6" style="border-width:1px;border-style:solid;">Polearm</th></tr>
-      <tr height="10%" width="150px"><th rowspan="2"><img src="Dracones.png" height="108" width="85" style="padding:8px;"></th>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>J.Tanaka</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Tada</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Tony</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-      </tr>
-      <tr><td id="1-1-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="1-1-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="1-1-3-n" style="border-style:dotted solid solid dotted;"></td>
+      <tr height="10%"><td rowspan="1" width="129px"><img src="Dracones.png" height="108" width="85" style="padding:8px;"></td>
+          <td id="m1-1" style="border-style:solid solid solid solid;"></td>
+          <td id="m1-2" style="border-style:solid solid solid solid;"></td>
+          <td id="m1-3" style="border-style:solid solid solid solid;"></td>
 
-          <td id="1-1-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="1-1-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="1-1-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
+          <td id="m1-4" style="border-style:solid solid solid solid;"></td>
+          <td id="m1-5" style="border-style:solid solid solid solid;"></td>
+          <td id="m1-6" style="border-style:solid solid solid solid;"></td>
 
-          <td id="1-2-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="1-2-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="1-2-3-n" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="1-2-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="1-2-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="1-2-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="1-3-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="1-3-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="1-3-3-n" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="1-3-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="1-3-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="1-3-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
+          <td id="m1-7" style="border-style:solid solid solid solid;"></td>
+          <td id="m1-8" style="border-style:solid solid solid solid;"></td>
+          <td id="m1-9" style="border-style:solid solid solid solid;"></td>
       </tr>
 
-      <tr height="10%"><th rowspan="2"><img src="Sanglier.png" height="120" width="95" style="padding:8px;"></th>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Joshua</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Satou</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Ami</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-      </tr>
-      <tr><td id="2-1-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="2-1-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="2-1-3-n" style="border-style:dotted solid solid dotted;"></td>
+      <tr height="10%"><td rowspan="1" width="129px"><img src="Sanglier.png" height="120" width="95" style="padding:8px;"></td>
+          <td id="m2-1" style="border-style:solid solid solid solid;"></td>
+          <td id="m2-2" style="border-style:solid solid solid solid;"></td>
+          <td id="m2-3" style="border-style:solid solid solid solid;"></td>
 
-          <td id="2-1-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="2-1-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="2-1-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
+          <td id="m2-4" style="border-style:solid solid solid solid;"></td>
+          <td id="m2-5" style="border-style:solid solid solid solid;"></td>
+          <td id="m2-6" style="border-style:solid solid solid solid;"></td>
 
-          <td id="2-2-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="2-2-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="2-2-3-n" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="2-2-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="2-2-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="2-2-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="2-3-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="2-3-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="2-3-3-n" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="2-3-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="2-3-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="2-3-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
+          <td id="m2-7" style="border-style:solid solid solid solid;"></td>
+          <td id="m2-8" style="border-style:solid solid solid solid;"></td>
+          <td id="m2-9" style="border-style:solid solid solid solid;"></td>
       </tr>
 
-      <tr height="10%"><th rowspan="2"><img src="Kuroganeshu.png" height="108" width="85" style="padding:8px;"></th>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Sagamigawa</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>K.Tanaka</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Fudo</div></td>
-          <td colspan="3" style="border-style:dotted solid;font-size:28px;"><div>Total</div></td>
-      </tr>
-      <tr><td id="3-1-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="3-1-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="3-1-3-n" style="border-style:dotted solid solid dotted;"></td>
+      <tr height="10%"><td rowspan="1" width="129px"><img src="Kuroganeshu.png" height="108" width="85" style="padding:8px;"></td>
+          <td id="m3-1" style="border-style:solid solid solid solid;"></td>
+          <td id="m3-2" style="border-style:solid solid solid solid;"></td>
+          <td id="m3-3" style="border-style:solid solid solid solid;"></td>
 
-          <td id="3-1-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="3-1-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="3-1-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
+          <td id="m3-4" style="border-style:solid solid solid solid;"></td>
+          <td id="m3-5" style="border-style:solid solid solid solid;"></td>
+          <td id="m3-6" style="border-style:solid solid solid solid;"></td>
 
-          <td id="3-2-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="3-2-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="3-2-3-n" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="3-2-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="3-2-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="3-2-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="3-3-1-n" style="border-style:dotted dotted solid solid;"></td>
-          <td id="3-3-2-n" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="3-3-3-n" style="border-style:dotted solid solid dotted;"></td>
-
-          <td id="3-3-1-t" width="37px" style="border-style:dotted dotted solid solid;"></td>
-          <td id="3-3-2-t" width="37px" style="border-style:dotted dotted solid dotted;"></td>
-          <td id="3-3-3-t" width="37px" style="border-style:dotted solid solid dotted;"></td>
+          <td id="m3-7" style="border-style:solid solid solid solid;"></td>
+          <td id="m3-8" style="border-style:solid solid solid solid;"></td>
+          <td id="m3-9" style="border-style:solid solid solid solid;"></td>
       </tr>
 </table>
 </div>
