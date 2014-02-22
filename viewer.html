@@ -1,45 +1,291 @@
 <html>
   <head>
     <style>
-      body {
-        font-family: "Helvetica Neue", helvetica, arial;
-        color:red;
-        padding: 15px;
-        background-color:black;
-      }
+.view {
+    margin:0px;padding:0px;
+    width:100%;
+    background:black;
+    height:120px;
+}
+.view table{
+    border-collapse: collapse;
+        border-spacing: 0;
+    width:100%;
+    margin:0px;padding:0px 0px 48px 0px;
+   font-size:44px;
+   color:white;
+   text-align:center;
+   font-weight:bold;
+}
+.board {
+    margin:0px;padding:0px;
+    width:100%;
+}
+.board table{
+   text-align:center;
+    border-collapse: collapse;
+        border-spacing: 0;
+    width:100%;
+    height:80%;
+    margin:0px;padding:30px 0px 0px 0px;
+}
 
-      ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
+.vs{
+   font-weight:bold;
+   font-size:92px;
+   color:#303030;
+   padding-left:48px;
+   padding-right:48px;
+   text-align:center;
+}
 
-      ul li {
-        line-height: 1.4;
-      }
+.fanim {
+   background:white;
+   color:black;
+   font-weight:bold;
+    font-size:192px;
+    width:266px;
 
-      .left-data {
-        color:red;
-      }
+    border:4px solid black;
 
-      .todo {
-        height: 600px;
-        width: 400px;
-        background-color:white; 
-        -webkit-border-radius: 300px 0 0 0;
-        border-radius: 300px 0 0 0;
-        -webkit-box-shadow: -10px 0 5px 10px #AC2832;
-        box-shadow: -10px 0 5px 10px #AC2832;
-      }
-      .right-data {
-        color:red;
-      }
+    -moz-border-radius-bottomleft:18px;
+    -webkit-border-bottom-left-radius:18px;
+    border-bottom-left-radius:18px;
+
+    -moz-border-radius-bottomright:18px;
+    -webkit-border-bottom-right-radius:18px;
+    border-bottom-right-radius:18px;
+
+    -moz-border-radius-topright:18px;
+    -webkit-border-top-right-radius:18px;
+    border-top-right-radius:18px;
+
+    -moz-border-radius-topleft:18px;
+    -webkit-border-top-left-radius:18px;
+    border-top-left-radius:18px;
+}
+
+.fscore {
+   background:white;
+   color:black;
+   font-weight:bold;
+    font-size:192px;
+    width:266px;
+
+    border:4px solid black;
+
+    -moz-border-radius-bottomleft:18px;
+    -webkit-border-bottom-left-radius:18px;
+    border-bottom-left-radius:18px;
+
+    -moz-border-radius-bottomright:18px;
+    -webkit-border-bottom-right-radius:18px;
+    border-bottom-right-radius:18px;
+
+    -moz-border-radius-topright:18px;
+    -webkit-border-top-right-radius:18px;
+    border-top-right-radius:18px;
+
+    -moz-border-radius-topleft:18px;
+    -webkit-border-top-left-radius:18px;
+    border-top-left-radius:18px;
+
+    animation:myfirst 1s;
+    -webkit-animation:myfirst 1s; /* Safari and Chrome */
+}
+
+@keyframes myfirst
+{
+0%   {background:white;}
+20%  {background:#A00000;}
+100% {background:white;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+0%   {background:white;}
+20%  {background:#A00000;}
+100% {background:white;}
+}
+
+.fnamel {
+   background-color:black;
+   color:white;
+   font-weight:bold;
+   font-size:64px;
+   width:464px;
+
+    border:2px solid white;
+
+    -moz-border-radius-bottomleft:38px;
+    -webkit-border-bottom-left-radius:38px;
+    border-bottom-left-radius:38px;
+
+    -moz-border-radius-topleft:38px;
+    -webkit-border-top-left-radius:38px;
+    border-top-left-radius:38px;
+}
+
+.fnamer {
+   background-color:black;
+   color:white;
+   font-weight:bold;
+   font-size:64px;
+   width:464px;
+
+    border:2px solid white;
+
+    -moz-border-radius-bottomright:38px;
+    -webkit-border-bottom-right-radius:38px;
+    border-bottom-right-radius:38px;
+
+    -moz-border-radius-topright:38px;
+    -webkit-border-top-right-radius:38px;
+    border-top-right-radius:38px;
+}
+
+.tftable {
+    background:url("jabl.png") no-repeat;
+    margin:20px 0px 0px 0px;padding:0px;
+    width:100%;
+    box-shadow: 10px 10px 5px #888888;
+    border:1px solid black;
+    
+    -moz-border-radius-bottomleft:6px;
+    -webkit-border-bottom-left-radius:6px;
+    border-bottom-left-radius:6px;
+    
+    -moz-border-radius-bottomright:6px;
+    -webkit-border-bottom-right-radius:6px;
+    border-bottom-right-radius:6px;
+    
+    -moz-border-radius-topright:6px;
+    -webkit-border-top-right-radius:6px;
+    border-top-right-radius:6px;
+    
+    -moz-border-radius-topleft:6px;
+    -webkit-border-top-left-radius:6px;
+    border-top-left-radius:6px;
+}.tftable table{
+    border-collapse: collapse;
+        border-spacing: 0;
+    width:100%;
+    height:52%;
+    margin:0px;padding:0px;
+}.tftable tr:last-child td:last-child {
+    -moz-border-radius-bottomright:6px;
+    -webkit-border-bottom-right-radius:6px;
+    border-bottom-right-radius:6px;
+}
+.tftable table tr:first-child td:first-child {
+    -moz-border-radius-topleft:6px;
+    -webkit-border-top-left-radius:6px;
+    border-top-left-radius:6px;
+}
+.tftable table tr:first-child td:last-child {
+    -moz-border-radius-topright:6px;
+    -webkit-border-top-right-radius:6px;
+    border-top-right-radius:6px;
+}.tftable tr:last-child td:first-child{
+    -moz-border-radius-bottomleft:6px;
+    -webkit-border-bottom-left-radius:6px;
+    border-bottom-left-radius:6px;
+}.tftable tr:hover td{
+    background-color:#ffffff;
+}
+.tftable td{
+    vertical-align:middle;
+    background-color:#e5e5e5;
+    border:1px solid black;
+    border-width:1px 1px 1px 1px;
+    text-align:center;
+    padding:4px;
+    font-size:38px;
+    font-family:Arial;
+    font-weight:normal;
+    color:#000000;
+}.tftable tr:last-child td{
+    border-width:1px 1px 1px 1px;
+}.tftable tr th:first-child{
+    background: #98bede;
+    font-size:22px;
+    font-family:Arial;
+    font-weight:normal;
+    max-width:80px;
+    color:#000000;
+}.tftable tr td:last-child{
+    border-width:1px 1px 1px 1px;
+}.tftable tr:last-child td:last-child{
+    border-width:1px 1px 1px 1px;
+}
+.tftable tr:first-child {
+    background: #deefff; /* Old browsers */
+    background: -moz-linear-gradient(top, #deefff 0%, #deefff 44%, #98bede 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#deefff), color-stop(44%,#deefff), color-stop(100%,#98bede)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #deefff 0%,#deefff 44%,#98bede 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#deefff', endColorstr='#98bede',GradientType=0 ); /* IE6-9 */
+    text-align:center;
+    border-width:1px 1px 1px 1px;
+    font-size:24px;
+    font-family:Arial;
+    font-weight:normal;
+    color:#000000;
+}
+.tftable tr:first-child th:first-child{
+    background: #deefff; /* Old browsers */
+    background: -moz-linear-gradient(top, #deefff 0%, #deefff 44%, #98bede 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#deefff), color-stop(44%,#deefff), color-stop(100%,#98bede)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #deefff 0%,#deefff 44%,#98bede 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#deefff', endColorstr='#98bede',GradientType=0 ); /* IE6-9 */
+    text-align:center;
+    border-width:1px 1px 1px 1px;
+    font-size:24px;
+    font-family:Arial;
+    font-weight:normal;
+    color:#000000;
+
+}
+.tftable tr:first-child td:last-child{
+    border-width:0px 0px 1px 1px;
+}
+
+.vertab tr {
+    background: #deefff; /* Old browsers */
+    background: -moz-linear-gradient(top, #deefff 0%, #deefff 44%, #98bede 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#deefff), color-stop(44%,#deefff), color-stop(100%,#98bede)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #deefff 0%,#deefff 44%,#98bede 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #deefff 0%,#deefff 44%,#98bede 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#deefff', endColorstr='#98bede',GradientType=0 ); /* IE6-9 */
+    border:0px solid black;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    font-size:24px;
+    font-family:Arial;
+    font-weight:normal;
+    color:#000000;
+    border-width:0px 0px 1px 0px;
+}
+div{
+  float:left;
+}
+
     </style>
 
     <script>
       //var host = window.location.origin.replace(/^http/, 'ws')
       var host = "ws://" + window.location.hostname + ":" + window.location.port; 
-      var ws = new WebSocket(host);
+      var ws = null;
+      
+      window.onload=function(){
+      ws = new WebSocket(host);
       ws.onmessage = function (event) {
         //var li = document.createElement('li');
         //li.innerHTML = JSON.parse(event.data);
@@ -47,39 +293,103 @@
         var scores = JSON.parse(event.data);
 
         if (scores[0] == "ROUND1") {
-          window.location.replace('/table.html');
+          //window.location.replace('/table.html');
+          document.getElementById("phase").innerHTML = "Duel Fight - Round 1";
+          ws.send("GET");
         } else if (scores[0] == "ROUND2") {
-          window.location.replace('/table.html');
+          //window.location.replace('/table.html');
+          document.getElementById("phase").innerHTML = "Duel Fight - Round 2";
+          ws.send("GET");
         } else if (scores[0] == "ROUND3") {
-          window.location.replace('/table.html');
+          //window.location.replace('/table.html');
+          document.getElementById("phase").innerHTML = "Duel Fight - Round 3";
+          ws.send("GET");
         } else if (scores[0] == "VIEW") {
           window.location.replace('/viewer.html');
-        } else { 
-          document.getElementById("score-a").innerHTML = scores[0].toString(); 
-          document.getElementById("score-b").innerHTML = scores[1].toString(); 
-        }
+        } else if (scores.length == 3 && scores[2] == -1) {
+            var cell0 = document.getElementById("score0");
+            var cell1 = document.getElementById("score1");
+            if (cell0.innerHTML != scores[0]){
+                 cell0.className = "fscore";
+                 setTimeout(function() { resetAnim0(); },1100);
+            } 
+            if (cell1.innerHTML != scores[1]){
+                 cell1.className = "fscore";
+                 setTimeout(function() { resetAnim1(); },1100);
+            } 
+            cell0.innerHTML = scores[0];
+            cell1.innerHTML = scores[1];
+        } else {
+          var cell = document.getElementById(scores[0]);
+          if (cell != null) {
+             cell.innerHTML = scores[1];
+             if (scores[0] == "side-0") {
+               var img = document.getElementById("img0");
+               img.src = scores[1] + ".png";
+             }
+             else if (scores[0] == "side-1") {
+               var img = document.getElementById("img1");
+               img.src = scores[1] + ".png";
+             }
+          }
+       }
       };
-      function sendPoint() {
-        ws.send("Point");
+
+       ws.onopen = function (event) {
+           ws.send("GET");
+       }
       }
-      function sendReset() {
-        ws.send("Reset");
+
+      function tryGet() {
+        if (ws.readyState == 1)
+        { 
+           ws.send("GET");
+        } else {
+          setTimeout(tryGet(), 3000);
+        }
       }
+
+      function resetAnim0() {
+        var cell = document.getElementById("score0");
+        cell.className="fanim";
+      }
+
+      function resetAnim1() {
+        var cell = document.getElementById("score1");
+        cell.className="fanim";
+      }
+
+      function test1() {
+          var cell = document.getElementById("score0");
+          if (cell != null) {
+             cell.className = "fscore";
+             cell.innerHTML = "1";
+             setTimeout(function() { resetAnim(); },1100);
+          }
+        }
+
     </script>
   </head>
   <body>
-    <h1>Score:</h1>
-    <div class="left-data">
-      <div id='team-a'>N/A</div>
-      <div id='name-a'>N/A</div>
-      <div id='info-a'>N/A</div>
-      <div id='score-a'></div>
+    <div class="view">
+    <table>
+      <tr id="category"></tr>
+      <tr id="phase"></tr>
+    </table>
     </div>
-    <div class="right-data">
-      <div id='team-b'>N/A</div>
-      <div id='name-b'>N/A</div>
-      <div id='info-b'>N/A</div>
-      <div id='score-b'></div>
+    <div class="board">
+    <table>
+      <tr>
+        <td><div style="float:leftt;"><img id="img0" src="smiley.gif" height="280" width="200"></div><div id="score0" class="fanim" style="float:right;"></div></td>
+        <td><div class="vs">VS</div></td>
+        <td><div id="score1" class="fanim" style="float:left;"></div><div style="float:right;"><img id="img1" src="smiley.gif" height="280" width="200"></div></td>
+      </tr>
+      <tr>
+        <td width="50%"><div id="side-0" class="fnamel" style="text-align:right;float:right;padding-right:10px;"/></td>
+        <td width="0px" rowspan="0"></td>
+        <td width="50%"><div id="side-1" class="fnamer" style="text-align:left;float:left;padding-left:10px;"/></td>
+      </tr>
+    </table>
     </div>
   </body>
 </html>
