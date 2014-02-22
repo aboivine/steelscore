@@ -175,7 +175,7 @@ wss.broadcast = function(data) {
 
 wss.on('error', function(e) {
   console.log("WebSoseckt Error:" + e);
-}
+});
 
 wss.on('connection', function(ws) {
     var id = setInterval(function() {
