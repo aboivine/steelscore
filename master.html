@@ -61,8 +61,23 @@
       function sendPoint(side) {
         ws.send(side);
       }
+      function setScore(score, idx, val) {
+        score.args["idx"] = idx;
+        score.args["val"] = val;
+        score.fn = "setScore";
+      }
       function sendReset() {
-        ws.send("Reset");
+        var reqList = { reqs:[] };
+        var score1 = { fn:"", args:{} };
+        var score2 = { fn:"", args:{} };
+
+        setScore(score1, 0, 0);
+        setScore(score2, 1, 0);
+
+        reqList.reqs.push(score1);
+        reqList.reqs.push(score2);
+
+        ws.send(JSON.stringify(reqList));
       }
       function displayTable1() {
         ws.send("ROUND1");

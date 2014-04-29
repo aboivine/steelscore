@@ -11,58 +11,68 @@
         width: 100%;
         height: 300px;
       }
-    </style>
-
-    <script>
+    </style><script src="/socket.io/socket.io.js"></script><script>
       var names = new Array();
       names[0] = "";
       names[1] = "";
-      var ws = null;
+      var socket = null;
       var jid = getParameterByName("jid");
       var side = 0;
       //var host = window.location.origin.replace(/^http/, 'ws')
       function openWebSocket(){
-        var host = "ws://" + window.location.hostname + ":" + window.location.port; 
-        ws = new WebSocket(host);
-        ws.onmessage = function (event) {
-           //document.getElementById("count").innerHTML = JSON.parse(event.data);
-          var scores = JSON.parse(event.data);
-          //alert(scores.length.toString()+"-"+scores[2].toString()+"-"+side.toString()+"-"+scores[side].toString());
-          if (scores.length == 3 && scores[2] == -1) {
-              document.getElementById("count").innerHTML = scores[side];}
-          else if (scores.length == 3 && scores[2] == -2 && scores[0] == jid) {
-             side = scores[1];
-             document.getElementById("judge").innerHTML = names[side];
-          } else if (scores.length > 1)  {
-             if (scores[0] == "side-0") {
-               names[0] = scores[1];
-               document.getElementById("judge").innerHTML = names[side];
-             } else if (scores[0] == "side-1") {
-               names[1] = scores[1];
-               document.getElementById("judge").innerHTML = names[side];
-             }
-          }
-        };
-       ws.onopen = function (event) {
-          ws.send("GET");
-          if(jid==0){ws.send("GJ0");}
-          else if(jid==1){ws.send("GJ1");}
-          else if(jid==2){ws.send("GJ2");}
-          else if(jid==3){ws.send("GJ3");}
-       };
+          var host = "ws://" + window.location.hostname + ":" + window.location.port; 
+          socket = io.connect(host); // TIP: .connect with no args does auto-discovery
+          socket.on('connect', function () { // TIP: you can avoid listening on `connect` and listen on events directly too!
+/*
+              if(jid==0){socket.emit("GJ0");}
+              else if(jid==1){socket.emit("GJ1");}
+              else if(jid==2){socket.emit("GJ2");}
+              else if(jid==3){socket.emit("GJ3");}
 
-     ws.onclose = function (event) {            
-         //retryOpeningWebSocket();
-      };
+             socket.on('news', function (data) {
+               console.log(data);
+               socket.emit('my other event', { my: 'data' });
+             });
+*/
+            //ws = new WebSocket(host);
+            //ws.onmessage = function (event) {
+            socket.on('hb', function (event) {
+               //document.getElementById("count").innerHTML = JSON.parse(event.data);
+              var scores = JSON.parse(event);
+              //alert(scores.length.toString()+"-"+scores[2].toString()+"-"+side.toString()+"-"+scores[side].toString());
+              if (scores.length == 3 && scores[2] == -1) {
+                  document.getElementById("count").innerHTML = scores[side];}
+            });
+            socket.on('counter_info', function (event) {
+               //document.getElementById("count").innerHTML = JSON.parse(event.data);
+              var scores = JSON.parse(event);
+              if (scores.length == 3 && scores[2] == -2 && scores[0] == jid) {
+                 side = scores[1];
+                 document.getElementById("judge").innerHTML = names[side];
+              } else if (scores.length > 1)  {
+                 if (scores[0] == "side-0") {
+                   names[0] = scores[1];
+                   document.getElementById("judge").innerHTML = names[side];
+                 } else if (scores[0] == "side-1") {
+                   names[1] = scores[1];
+                   document.getElementById("judge").innerHTML = names[side];
+                 }
+              }
+            });
 
-
+          });
+          socket.emit('register_counter', { id: jid });
+              /* 
+         ws.onclose = function (event) {            
+             //retryOpeningWebSocket();
+          };*/
        }
 
       window.onload=function(){
       openWebSocket();};
 
       function sendPoint() {
-        ws.send(side);
+        socket.emit('score', side);
       }
 
       function getParameterByName(name) {

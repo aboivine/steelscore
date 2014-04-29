@@ -17,6 +17,8 @@ var f0name = "";
 var f1name = "";
 var catname = "";
 
+var evtHndlrs = {};
+
 function sendAllI()
 {
    for (var i = 1; i <=3; i++) {
@@ -36,7 +38,7 @@ function sendAllI()
          if (snd[0].slice(-1) == "n"){
             snd[0] = "1-" + snd[0];
          }
-         wss.broadcast(JSON.stringify(snd));
+         ws.broadcast.emit(JSON.stringify(snd));
       }});
 
    }}}}
@@ -62,7 +64,7 @@ function sendAllII()
          if (snd[0].slice(-1) == "n"){
             snd[0] = "2-" + snd[0];
          }
-         wss.broadcast(JSON.stringify(snd));
+         ws.broadcast.emit(JSON.stringify(snd));
       }});
 
    }}}}
@@ -87,7 +89,7 @@ function sendAllIII()
          if (snd[0].slice(-1) == "n"){
             snd[0] = "3-" + snd[0];
          }
-         wss.broadcast(JSON.stringify(snd));
+         ws.broadcast.emit(JSON.stringify(snd));
       }});
 
    }}}}
@@ -106,14 +108,14 @@ function sendAll() {
      if (l == 1) {
        key = round.toString() + "-" + i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
        blank[0]=i.toString()+"-"+j.toString()+"-"+k.toString()+"-n";
-       wss.broadcast(JSON.stringify(blank));
+       ws.broadcast.emit(JSON.stringify(blank));
      } else {
        key = i.toString()+"-"+j.toString()+"-"+k.toString()+"-t";
      }
       dbclient.get(key, function(err, reply) {
        if (reply!=null){
          var snd = reply.split(":");
-         wss.broadcast(JSON.stringify(snd));
+         ws.broadcast.emit(JSON.stringify(snd));
       }});
    
    }}}}
@@ -125,25 +127,45 @@ function sendAll() {
      dbclient.get(key, function(err, reply) {
        if (reply!=null){
          var snd = reply.split(":");
-         wss.broadcast(JSON.stringify(snd));
+         ws.broadcast.emit(JSON.stringify(snd));
       }});
 
    }}
 
 }
 
-var WebSocketServer = require('ws').Server
-  , http = require('http')
-  , express = require('express')
-  , app = express()
-  , port = process.env.PORT || 5000;
+function executeFunctionByName(functionName, context /*, args*/) {
+    var args = Array.prototype.slice.call(arguments, 2);
+    console.log(args[0]);
+    var namespaces = functionName.split(".");
+    var func = namespaces.pop();
+    for (var i = 0; i < namespaces.length; i++) {
+        context = context[namespaces[i]];
+    }
+    return context[func](args[0]);
+}
 
-app.use(express.static(__dirname + '/'));
+var app = require('express')()
+  , server = require('http').createServer(app)
+  , io = require('socket.io').listen(server);
+
+
+//var WebSocketServer = require('ws').Server
+  //, http = require('http')
+  //, express = require('express')
+  //, app = express()
+var port = process.env.PORT || 5000;
+
+//app.use(express.static(__dirname + '/'));
 
 //app.all("*", function(request, response, next) {
 //  response.writeHead(200, { "Content-Type": "html" });
 //  next();
 //});
+
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
+});
 
 app.get("/counter?:who", function(request, response) {
   response.sendfile('counter.html');
@@ -167,7 +189,9 @@ app.get("*", function(request, response) {
   response.end("This page doesn't exist.");
 });
 
+/*
 var server = http.createServer(app);
+*/
 server.on('error', function (e) {
   // Handle your error here
   console.log("Http server error:" + e);
@@ -175,6 +199,8 @@ server.on('error', function (e) {
 server.listen(port);
 
 console.log('http server listening on %d', port);
+
+/*
 
 var wss = new WebSocketServer({server: server});
 console.log('websocket server created');
@@ -191,20 +217,62 @@ wss.broadcast = function(data) {
 wss.on('error', function(e) {
   console.log("WebSoseckt Error:" + e);
 });
+*/
 
-wss.on('connection', function(ws) {
+evtHndlrs.setScore = function(args) { 
+    console.log("RESET");
+    console.log(args);
+    scores[args.idx] = args.val;
+};
+
+io.sockets.on('error', function (error) {
+    console.log("io.sockets error: " + error);
+});
+
+io.sockets.on('connection', function (ws) {
     var id = setInterval(function() {
-        wss.broadcast(JSON.stringify(scores));
-    }, 440);
+        ws.broadcast.emit('hb',JSON.stringify(scores));
+    }, 2400);
 
     console.log('websocket connection open');
 
+    ws.on('score', function (data) {
+       console.log(data);
+       scores[0]++;
+    });
+
+    ws.on('register_counter', function (data) {
+       console.log(data);
+       var room = 'score' + data.id;
+       console.log("Join " + room);
+       ws.join(room);
+
+       ws.broadcast.to(room).emit('hb',JSON.stringify(scores));
+
+       var info = new Array();
+       info[0] = "side-0";
+       //info[1] = f0name;
+       info[1] = "TEST";
+       ws.emit('counter_info', JSON.stringify(info));
+       console.log("Joined " + info);
+    });
+
+
     ws.onmessage = function (event) {
         //ws.send(JSON.stringify(new Date()), function() {  });
-        if (event.data == "Reset") {
-          scores[0] = 0;
-          scores[1] = 0;
-        } else if (event.data == "0") { 
+        try{
+        console.log(event.data);
+        var queries = JSON.parse(event.data);
+        console.log(queries);
+
+        queries.reqs.forEach(function(query) {
+           console.log(query);
+           executeFunctionByName(query.fn, evtHndlrs, query.args);
+        });
+        return;
+        } catch(e){console.log(e.message);}
+ 
+        if (event.data == "0") { 
           scores[0]++;
         } else if (event.data == "1") {
           scores[1]++;
@@ -213,62 +281,62 @@ wss.on('connection', function(ws) {
         } else if (event.data == "3") {
           scores[1]--;
         }else if (event.data == "MELEE") {
-          wss.broadcast(JSON.stringify(["MELEE"]));
+          ws.broadcast.emit(JSON.stringify(["MELEE"]));
         } else if (event.data == "ROUND1") {
-          wss.broadcast(JSON.stringify(["ROUND1"]));
+          ws.broadcast.emit(JSON.stringify(["ROUND1"]));
           round = 1;
         } else if (event.data == "ROUND2") {
-          wss.broadcast(JSON.stringify(["ROUND2"]));
+          ws.broadcast.emit(JSON.stringify(["ROUND2"]));
           round = 2;
         } else if (event.data == "ROUND3") {
-          wss.broadcast(JSON.stringify(["ROUND3"]));
+          ws.broadcast.emit(JSON.stringify(["ROUND3"]));
           round = 3;
         } else if (event.data == "GJ0") {
           var judge = new Array();
            judge[0]=0;
            judge[1]=savedJ[0];
            judge[2]=-2;
-           wss.broadcast(JSON.stringify(judge));
+           ws.broadcast.emit(JSON.stringify(judge));
         }else if (event.data == "GJ1") {
            var judge = new Array();
            judge[0]=1;
            judge[1]=savedJ[1];
            judge[2]=-2;
-           wss.broadcast(JSON.stringify(judge));
+           ws.broadcast.emit(JSON.stringify(judge));
         }else if (event.data == "GJ2") {
           var judge = new Array();
            judge[0]=2;
            judge[1]=savedJ[2];
            judge[2]=-2;
-           wss.broadcast(JSON.stringify(judge));
+           ws.broadcast.emit(JSON.stringify(judge));
         }else if (event.data == "GJ3") {
           var judge = new Array();
            judge[0]=3;
            judge[1]=savedJ[3];
            judge[2]=-2;
-           wss.broadcast(JSON.stringify(judge));
+           ws.broadcast.emit(JSON.stringify(judge));
         }else if (event.data == "GET") {
           sendAll();
           var info = new Array();
           info[0] = "category";
           info[1] = catname;
-          wss.broadcast(JSON.stringify(info));
+          ws.broadcast.emit(JSON.stringify(info));
 
           info[0] = "side-0";
           info[1] = f0name;
-          wss.broadcast(JSON.stringify(info));
+          ws.broadcast.emit(JSON.stringify(info));
 
           info[0] = "side-1";
           info[1] = f1name;
-          wss.broadcast(JSON.stringify(info));
+          ws.broadcast.emit(JSON.stringify(info));
         } else if (event.data == "GETI") {
           sendAllI();
           sendAllII();
           sendAllIII();
         } else if (event.data == "VIEW") {
-          wss.broadcast(JSON.stringify(["VIEW"]));
+          ws.broadcast.emit(JSON.stringify(["VIEW"]));
         } else if (event.data == "TABLE") {
-          wss.broadcast(JSON.stringify(["TABLE"]));
+          ws.broadcast.emit(JSON.stringify(["TABLE"]));
         } else {
           var query = event.data.split(':');
           if (query.length > 1)
@@ -281,35 +349,35 @@ wss.on('connection', function(ws) {
                  var snd = new Array();
                  snd[0] = key;
                  snd[1] =reply ;
-              wss.broadcast(JSON.stringify(snd));
+              ws.broadcast.emit(JSON.stringify(snd));
             });
             } else if (key == "jid0"){
                savedJ[0]=value;
                console.log("SAVED A="+value);
                judges[0]=0;
                judges[1]=value;
-               wss.broadcast(JSON.stringify(judges));
+               ws.broadcast.emit(JSON.stringify(judges));
             }
             else if (key == "jid1"){
                savedJ[1]=value;
                console.log("SAVED B="+value);
                judges[0]=1;
                judges[1]=value;
-               wss.broadcast(JSON.stringify(judges));
+               ws.broadcast.emit(JSON.stringify(judges));
             }
             else if (key == "jid2"){
                savedJ[2]=value;
                console.log("SAVED C="+value);
                judges[0]=2;
                judges[1]=value;
-               wss.broadcast(JSON.stringify(judges));
+               ws.broadcast.emit(JSON.stringify(judges));
             }
             else if (key == "jid3"){
                savedJ[3]=value;
                console.log("SAVED D="+value);
                judges[0]=3;
                judges[1]=value;
-               wss.broadcast(JSON.stringify(judges));
+               ws.broadcast.emit(JSON.stringify(judges));
             }
             else{
               var res = key+":"+value;
@@ -327,7 +395,7 @@ wss.on('connection', function(ws) {
 
               dbclient.set(key,res);
               console.log("set "+key+"="+res);
-              wss.broadcast(JSON.stringify(query));
+              ws.broadcast.emit(JSON.stringify(query));
            }
           }
         }
