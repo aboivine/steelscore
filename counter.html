@@ -43,9 +43,10 @@
               if (scores.length == 3 && scores[2] == -1) {
                   document.getElementById("count").innerHTML = scores[side];}
             });
-            socket.on('counter_info', function (event) {
+
+            socket.emit('register_counter', { id: jid }, function(data){
                //document.getElementById("count").innerHTML = JSON.parse(event.data);
-              var scores = JSON.parse(event);
+              var scores = JSON.parse(data);
               if (scores.length == 3 && scores[2] == -2 && scores[0] == jid) {
                  side = scores[1];
                  document.getElementById("judge").innerHTML = names[side];
@@ -61,7 +62,6 @@
             });
 
           });
-          socket.emit('register_counter', { id: jid });
               /* 
          ws.onclose = function (event) {            
              //retryOpeningWebSocket();
@@ -72,7 +72,10 @@
       openWebSocket();};
 
       function sendPoint() {
-        socket.emit('score', side);
+        socket.emit('score', side, function (data) {
+            //on ack
+            document.getElementById("count").innerHTML = data;
+        });
       }
 
       function getParameterByName(name) {

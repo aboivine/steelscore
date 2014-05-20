@@ -17,7 +17,6 @@ var f0name = "";
 var f1name = "";
 var catname = "";
 
-var evtHndlrs = {};
 
 function sendAllI()
 {
@@ -134,7 +133,29 @@ function sendAll() {
 
 }
 
-function executeFunctionByName(functionName, context /*, args*/) {
+
+function incr_score(idx, ack_fn, ws){
+       scores[idx]++;
+       ack_fn(scores[idx]);
+       var room = 'score' + idx;
+       ws.broadcast.to(room).emit('hb',JSON.stringify(scores));
+};
+
+function register_counter(data, ack_fn, ws){
+       var room = 'score' + data.id;
+       console.log("Join " + room);
+       ws.join(room);
+
+       var info = new Array();
+       info[0] = "side-0";
+       //info[1] = f0name;
+       info[1] = "TEST";
+       info[2] = "TEST";
+       ack_fn(JSON.stringify(info));
+};
+
+/*
+function executeFunctionByName(functionName, context , args) {
     var args = Array.prototype.slice.call(arguments, 2);
     console.log(args[0]);
     var namespaces = functionName.split(".");
@@ -143,7 +164,7 @@ function executeFunctionByName(functionName, context /*, args*/) {
         context = context[namespaces[i]];
     }
     return context[func](args[0]);
-}
+}*/
 
 var app = require('express')()
   , server = require('http').createServer(app)
@@ -219,42 +240,23 @@ wss.on('error', function(e) {
 });
 */
 
-evtHndlrs.setScore = function(args) { 
-    console.log("RESET");
-    console.log(args);
-    scores[args.idx] = args.val;
-};
-
 io.sockets.on('error', function (error) {
     console.log("io.sockets error: " + error);
 });
 
 io.sockets.on('connection', function (ws) {
-    var id = setInterval(function() {
-        ws.broadcast.emit('hb',JSON.stringify(scores));
-    }, 2400);
+    //var id = setInterval(function() {
+        //ws.broadcast.emit('hb',JSON.stringify(scores));
+    //}, 2400);
 
     console.log('websocket connection open');
 
-    ws.on('score', function (data) {
-       console.log(data);
-       scores[0]++;
+    ws.on('score', function (idx, ack_fn) {
+       incr_score(idx, ack_fn, ws);
     });
 
-    ws.on('register_counter', function (data) {
-       console.log(data);
-       var room = 'score' + data.id;
-       console.log("Join " + room);
-       ws.join(room);
-
-       ws.broadcast.to(room).emit('hb',JSON.stringify(scores));
-
-       var info = new Array();
-       info[0] = "side-0";
-       //info[1] = f0name;
-       info[1] = "TEST";
-       ws.emit('counter_info', JSON.stringify(info));
-       console.log("Joined " + info);
+    ws.on('register_counter', function (data, ack_fn) {
+       register_counter(data, ack_fn, ws);
     });
 
 
@@ -267,7 +269,7 @@ io.sockets.on('connection', function (ws) {
 
         queries.reqs.forEach(function(query) {
            console.log(query);
-           executeFunctionByName(query.fn, evtHndlrs, query.args);
+           //executeFunctionByName(query.fn, evtHndlrs, query.args);
         });
         return;
         } catch(e){console.log(e.message);}
