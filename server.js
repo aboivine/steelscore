@@ -134,11 +134,23 @@ function sendAll() {
 }
 
 
+function change_view(data, ack_fn, ws){
+    console.log("Change view to " + data.displayLabel);
+    ws.broadcast.to('viewer').emit('change_view', JSON.stringify(data));
+    if (data.roundId > 0) {
+        round = data.roundId;
+    }
+};
+
 function incr_score(idx, ack_fn, ws){
        scores[idx]++;
-       ack_fn(scores[idx]);
+       //ack_fn(scores[idx]);
        var room = 'score' + idx;
-       ws.broadcast.to(room).emit('hb',JSON.stringify(scores));
+       console.log("Setting " + room + " to " + scores[idx]);
+       //ws.broadcast.to(room).emit('hb',scores[idx]);
+       var data = { id: idx, score: scores[idx] };
+       ws.broadcast.to(room).emit('hb', JSON.stringify(data));
+       ws.emit('hb', JSON.stringify(data));
 };
 
 function register_counter(data, ack_fn, ws){
@@ -146,12 +158,17 @@ function register_counter(data, ack_fn, ws){
        console.log("Join " + room);
        ws.join(room);
 
-       var info = new Array();
-       info[0] = "side-0";
-       //info[1] = f0name;
-       info[1] = "TEST";
-       info[2] = "TEST";
-       ack_fn(JSON.stringify(info));
+       var data = { side: data.id, name: "TEST" };
+
+       if (ack_fn) {
+        ack_fn(JSON.stringify(data));
+       }
+};
+
+function register_viewer(data, ack_fn, ws){
+       var room = 'viewer';
+       console.log("Join " + room);
+       ws.join(room);
 };
 
 /*
@@ -216,6 +233,7 @@ var server = http.createServer(app);
 server.on('error', function (e) {
   // Handle your error here
   console.log("Http server error:" + e);
+  process.exit(1);
 });
 server.listen(port);
 
@@ -259,6 +277,13 @@ io.sockets.on('connection', function (ws) {
        register_counter(data, ack_fn, ws);
     });
 
+    ws.on('register_viewer', function (data, ack_fn) {
+       register_viewer(data, ack_fn, ws);
+    });
+    
+    ws.on('change_view', function (data, ack_fn) {
+       change_view(data, ack_fn, ws);
+    });
 
     ws.onmessage = function (event) {
         //ws.send(JSON.stringify(new Date()), function() {  });
@@ -282,17 +307,6 @@ io.sockets.on('connection', function (ws) {
           scores[0]--;
         } else if (event.data == "3") {
           scores[1]--;
-        }else if (event.data == "MELEE") {
-          ws.broadcast.emit(JSON.stringify(["MELEE"]));
-        } else if (event.data == "ROUND1") {
-          ws.broadcast.emit(JSON.stringify(["ROUND1"]));
-          round = 1;
-        } else if (event.data == "ROUND2") {
-          ws.broadcast.emit(JSON.stringify(["ROUND2"]));
-          round = 2;
-        } else if (event.data == "ROUND3") {
-          ws.broadcast.emit(JSON.stringify(["ROUND3"]));
-          round = 3;
         } else if (event.data == "GJ0") {
           var judge = new Array();
            judge[0]=0;
@@ -335,10 +349,6 @@ io.sockets.on('connection', function (ws) {
           sendAllI();
           sendAllII();
           sendAllIII();
-        } else if (event.data == "VIEW") {
-          ws.broadcast.emit(JSON.stringify(["VIEW"]));
-        } else if (event.data == "TABLE") {
-          ws.broadcast.emit(JSON.stringify(["TABLE"]));
         } else {
           var query = event.data.split(':');
           if (query.length > 1)
@@ -420,18 +430,24 @@ var url = require("url");
 if (process.env.REDISCLOUD_URL) {
 //REDISCLOUD_URL: redis://rediscloud:vX7OPQEOXIKi7zgm@pub-redis-14432.us-east-1-3.1.ec2.garantiadata.com:14432
 
-  console.log('connecting to Redis');
+  console.log('Connecting to Redis...');
   var rtg   = url.parse(process.env.REDISCLOUD_URL);
   dbclient = redis.createClient(rtg.port, rtg.hostname);
 
   dbclient.on("error", function (err) {
         console.log("Redis Error " + err);
     });
+  dbclient.on("connect", function () {
+        console.log("Successfully connected to Redis.");
+    });
   dbclient.auth(rtg.auth.split(":")[1]);
 } else {
-  console.log('local redis');
+  console.log('Connecting to local redis...');
   dbclient = redis.createClient();
   dbclient.on("error", function (err) {
         console.log("Redis Error " + err);
+    });
+  dbclient.on("connect", function () {
+        console.log("Successfully connected to Redis.");
     });
 }

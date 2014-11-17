@@ -40,27 +40,25 @@
                //document.getElementById("count").innerHTML = JSON.parse(event.data);
               var scores = JSON.parse(event);
               //alert(scores.length.toString()+"-"+scores[2].toString()+"-"+side.toString()+"-"+scores[side].toString());
-              if (scores.length == 3 && scores[2] == -1) {
-                  document.getElementById("count").innerHTML = scores[side];}
+              //if (scores.length == 3 && scores[2] == -1) {
+              //    document.getElementById("count").innerHTML = scores[side];}
+              document.getElementById("count").innerHTML = scores.score;
+            });
+            
+            socket.on('change_judge', function(data){
+               //document.getElementById("count").innerHTML = JSON.parse(event.data);
+              var scores = JSON.parse(data);
+              names[scores.id] = scores.name;
+              document.getElementById("judge").innerHTML = names[side];
             });
 
             socket.emit('register_counter', { id: jid }, function(data){
                //document.getElementById("count").innerHTML = JSON.parse(event.data);
               var scores = JSON.parse(data);
-              if (scores.length == 3 && scores[2] == -2 && scores[0] == jid) {
-                 side = scores[1];
-                 document.getElementById("judge").innerHTML = names[side];
-              } else if (scores.length > 1)  {
-                 if (scores[0] == "side-0") {
-                   names[0] = scores[1];
-                   document.getElementById("judge").innerHTML = names[side];
-                 } else if (scores[0] == "side-1") {
-                   names[1] = scores[1];
-                   document.getElementById("judge").innerHTML = names[side];
-                 }
-              }
-            });
-
+              side = scores.side;
+              document.getElementById("judge").innerHTML = scores.name;
+             });
+  
           });
               /* 
          ws.onclose = function (event) {            
@@ -72,10 +70,10 @@
       openWebSocket();};
 
       function sendPoint() {
-        socket.emit('score', side, function (data) {
+        socket.emit('score', side/*, function (data) {
             //on ack
             document.getElementById("count").innerHTML = data;
-        });
+        }*/);
       }
 
       function getParameterByName(name) {

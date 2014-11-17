@@ -28,38 +28,83 @@
 }
 
     </style>
-
+    <script src="/socket.io/socket.io.js"></script>
     <script>
       //var host = window.location.origin.replace(/^http/, 'ws')
-      var host = "ws://" + window.location.hostname + ":" + window.location.port; 
+      //var host = "ws://" + window.location.hostname + ":" + window.location.port; 
       //var ws = new WebSocket(host);
-      var ws = null;
+      var socket = null;
 
       
+     function openWebSocket(){
+          var host = "ws://" + window.location.hostname + ":" + window.location.port; 
+          socket = io.connect(host); // TIP: .connect with no args does auto-discovery
+          socket.on('connect', function () { // TIP: you can avoid listening on `connect` and listen on events directly too!
+/*
+              if(jid==0){socket.emit("GJ0");}
+              else if(jid==1){socket.emit("GJ1");}
+              else if(jid==2){socket.emit("GJ2");}
+              else if(jid==3){socket.emit("GJ3");}
+
+             socket.on('news', function (data) {
+               console.log(data);
+               socket.emit('my other event', { my: 'data' });
+             });
+*/
+            //ws = new WebSocket(host);
+            //ws.onmessage = function (event) {
+            /*
+            socket.onmessage = function (event) {
+                //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
+                var scores = JSON.parse(event.data);
+                if (scores instanceof Array)
+                {
+                  var cell = document.getElementById(scores[0]);
+                  if (cell != null) {
+                     cell.value = scores[1];
+                  } else if (scores.length == 3 && scores[2] == -1) {
+                    document.getElementById("score0").innerHTML = scores[0];
+                    document.getElementById("score1").innerHTML = scores[1];
+                  }
+                } else
+                {
+                }
+              };*/
+              
+            socket.on('hb', function (event) {
+               //document.getElementById("count").innerHTML = JSON.parse(event.data);
+              var scores = JSON.parse(event);
+              document.getElementById("score" + scores.id).innerHTML = scores.score;
+              //alert(scores.length.toString()+"-"+scores[2].toString()+"-"+side.toString()+"-"+scores[side].toString());
+              /*
+              var cell = document.getElementById(scores[0]);
+              if (cell != null) {
+                 cell.value = scores[1];
+              } */
+            });
+              
+             socket.emit('register_counter', { id: 0 });
+             socket.emit('register_counter', { id: 1 });
+            
+            
+              socket.send("GET");
+          });
+              /* 
+         ws.onclose = function (event) {            
+             //retryOpeningWebSocket();
+          };*/
+       }
+
       window.onload=function(){
-      ws = new WebSocket(host);
-      ws.onmessage = function (event) {
-        //document.querySelector('#pings').innerHTML = JSON.parse(event.data);
-        var scores = JSON.parse(event.data);
-        if (scores instanceof Array)
-        {
-          var cell = document.getElementById(scores[0]);
-          if (cell != null) {
-             cell.value = scores[1];
-          } else if (scores.length == 3 && scores[2] == -1) {
-            document.getElementById("score0").innerHTML = scores[0];
-            document.getElementById("score1").innerHTML = scores[1];
-          }
-        } else
-        {
-        }
+        openWebSocket();
       };
-      ws.onopen = function (event) {
-        ws.send("GET");
-      };
-      }
+  
+      
       function sendPoint(side) {
-        ws.send(side);
+        socket.emit('score', side/*, function (data) {
+            //on ack
+            document.getElementById("score" + side).innerHTML = data;
+        }*/);
       }
       function setScore(score, idx, val) {
         score.args["idx"] = idx;
@@ -77,38 +122,26 @@
         reqList.reqs.push(score1);
         reqList.reqs.push(score2);
 
-        ws.send(JSON.stringify(reqList));
-      }
-      function displayTable1() {
-        ws.send("ROUND1");
-      }
-      function displayTable2() {
-        ws.send("ROUND2");
-      }
-      function displayTable3() {
-        ws.send("ROUND3");
-      }
-      function displayView() {
-        ws.send("VIEW");
-      }
-      function displayTable() {
-        ws.send("TABLE");
-      }
-      function displayMelee() {
-        ws.send("MELEE");
+        socket.send(JSON.stringify(reqList));
       }
 
+      
+      function changeView(label, id) {
+          socket.emit('change_view', { roundId: id, displayLabel: label });
+      }
+            
+
       function sendResult(key) {
-        ws.send(key + ":" + document.getElementById(key).value);
+        socket.send(key + ":" + document.getElementById(key).value);
       }
       function sendResults(key,value) {
-        ws.send(key + ":" + value);
+        socket.send(key + ":" + value);
       }
 
       function tryGet() {
-        if (ws.readyState == 1)
+        if (socket.readyState == 1)
         { 
-           ws.send("GETI");
+           socket.send("GETI");
         } else {
           setTimeout(tryGet(), 3000);
         }
@@ -127,12 +160,12 @@
     |D<input type="radio" name="jid3" value="0" onchange="sendResults(this.name, this.value)">0
     <input type="radio" name="jid3" value="1" onchange="sendResults(this.name, this.value)">1
     <button onclick="sendReset()">RESET</button>
-    <button onclick="displayView()">VIEW</button>
-    <button onclick="displayTable()">TABLE</button>
-    <button onclick="displayTable1()">ROUND 1</button>
-    <button onclick="displayTable2()">ROUND 2</button>
-    <button onclick="displayTable3()">ROUND 3</button>
-    <button onclick="displayMelee()">MELEE</button>
+    <button name="VIEW"   value="0" onclick="changeView(this.name, this.value)">VIEW</button>
+    <button name="TABLE"  value="0" onclick="changeView(this.name, this.value)">TABLE</button>
+    <button name="ROUND1" value="1" onclick="changeView(this.name, this.value)">ROUND 1</button>
+    <button name="ROUND2" value="2" onclick="changeView(this.name, this.value)">ROUND 2</button>
+    <button name="ROUND3" value="3" onclick="changeView(this.name, this.value)">ROUND 3</button>
+    <button name="MELEE"  value="0" onclick="changeView(this.name, this.value)">MELEE</button>
 
     <h1>Score:</h1>
     <h2><button onclick="sendPoint(2)">-</button><button onclick="sendPoint(0)">+</button><div id='score0'></div> VS 
